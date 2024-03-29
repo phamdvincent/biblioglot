@@ -1,0 +1,14 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Word sentence links</h1>
+
+<div id="word_sentence_links">
+  <% @word_sentence_links.each do |word_sentence_link| %>
+    <%= render word_sentence_link %>
+    <p>
+      <%= link_to "Show this word sentence link", word_sentence_link %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New word sentence link", new_word_sentence_link_path %>

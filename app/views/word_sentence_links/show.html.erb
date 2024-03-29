@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @word_sentence_link %>
+
+<div>
+  <%= link_to "Edit this word sentence link", edit_word_sentence_link_path(@word_sentence_link) %> |
+  <%= link_to "Back to word sentence links", word_sentence_links_path %>
+
+  <%= button_to "Destroy this word sentence link", @word_sentence_link, method: :delete %>
+</div>

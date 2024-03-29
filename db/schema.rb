@@ -10,7 +10,42 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_03_29_160452) do
+ActiveRecord::Schema[7.0].define(version: 2024_03_29_165400) do
+  create_table "books", force: :cascade do |t|
+    t.string "title"
+    t.string "author"
+    t.integer "language_id"
+    t.string "publication_year"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "languages", force: :cascade do |t|
+    t.string "language_code"
+    t.string "english_name"
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "progresses", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "book_id"
+    t.integer "location"
+    t.integer "progress_percentage"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "sentences", force: :cascade do |t|
+    t.integer "book_id"
+    t.string "english_translation"
+    t.string "content"
+    t.integer "language_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -21,6 +56,25 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_29_160452) do
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  end
+
+  create_table "word_sentence_links", force: :cascade do |t|
+    t.integer "sentence_id"
+    t.integer "word_id"
+    t.integer "language_id"
+    t.integer "book_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "words", force: :cascade do |t|
+    t.string "word"
+    t.string "part_of_speech"
+    t.string "definition"
+    t.string "audio"
+    t.integer "language_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
 end

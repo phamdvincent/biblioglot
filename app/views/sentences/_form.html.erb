@@ -1,0 +1,37 @@
+<%= form_with(model: sentence) do |form| %>
+  <% if sentence.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(sentence.errors.count, "error") %> prohibited this sentence from being saved:</h2>
+
+      <ul>
+        <% sentence.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :book_id, style: "display: block" %>
+    <%= form.number_field :book_id %>
+  </div>
+
+  <div>
+    <%= form.label :english_translation, style: "display: block" %>
+    <%= form.text_field :english_translation %>
+  </div>
+
+  <div>
+    <%= form.label :content, style: "display: block" %>
+    <%= form.text_field :content %>
+  </div>
+
+  <div>
+    <%= form.label :language_id, style: "display: block" %>
+    <%= form.number_field :language_id %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

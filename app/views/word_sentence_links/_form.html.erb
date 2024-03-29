@@ -1,0 +1,37 @@
+<%= form_with(model: word_sentence_link) do |form| %>
+  <% if word_sentence_link.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(word_sentence_link.errors.count, "error") %> prohibited this word_sentence_link from being saved:</h2>
+
+      <ul>
+        <% word_sentence_link.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :sentence_id, style: "display: block" %>
+    <%= form.number_field :sentence_id %>
+  </div>
+
+  <div>
+    <%= form.label :word_id, style: "display: block" %>
+    <%= form.number_field :word_id %>
+  </div>
+
+  <div>
+    <%= form.label :language_id, style: "display: block" %>
+    <%= form.number_field :language_id %>
+  </div>
+
+  <div>
+    <%= form.label :book_id, style: "display: block" %>
+    <%= form.number_field :book_id %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

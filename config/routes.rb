@@ -1,4 +1,10 @@
 Rails.application.routes.draw do
+  resources :words
+  resources :word_sentence_links
+  resources :sentences
+  resources :progresses
+  resources :languages
+  resources :books
   #get("/", { :controller => "stories", :action => "index"})
   root to: "stories#index"
   devise_for :users
