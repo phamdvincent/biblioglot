@@ -28,3 +28,41 @@ https://learn.firstdraft.com/lessons/137
 1) Scaffold comes with rails, no need to install anything
 2) rails generate scaffold book title:string description:text released:boolean... \<column_name\>:\<type\>
 3) rake db:migrate
+
+### Learn Module
+Getting started with scaffolds <br>
+https://learn.firstdraft.com/lessons/158-getting-started-with-scaffolds
+
+
+## Install Stanza for NLP on Ubuntu
+
+### Command-line steps
+1) sudo apt update
+1) sudo apt install python3-pip
+3) pip3 install stanza
+
+### Documentation
+https://stanfordnlp.github.io/stanza/index.html#getting-started
+
+## AWS Services
+
+* Lambda
+* EC2
+* S3
+* DynamoDB
+* Polly
+* IAM
+
+### EC2
+* https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EC2_GetStarted.html#ec2-get-started-overview
+* https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/connect-linux-inst-ssh.html
+
+### IAM
+* Create IAM users and groups
+  - https://docs.aws.amazon.com/singlesignon/latest/userguide/quick-start-default-idc.html
+
+### Lambda
+* https://docs.aws.amazon.com/lambda/latest/dg/getting-started.html
+
+1) Create AWS account
+2) Set up IAM for authorizations
