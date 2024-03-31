@@ -64,5 +64,11 @@ https://stanfordnlp.github.io/stanza/index.html#getting-started
 ### Lambda
 * https://docs.aws.amazon.com/lambda/latest/dg/getting-started.html
 
+### S3
+* https://aws.amazon.com/s3/getting-started/
+
+### Polly
+* https://docs.aws.amazon.com/sdk-for-ruby/v3/developer-guide/polly-example-synthesize-speech.html
+
 1) Create AWS account
 2) Set up IAM for authorizations
