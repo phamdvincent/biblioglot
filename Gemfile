@@ -51,6 +51,9 @@ gem "bootsnap", require: false
 # Use Python methods in Ruby
 gem "pycall"
 
+# Use to get uuid
+gem "securerandom"
+
 # Use AWS S3 in project
 gem "aws-sdk-s3"
 

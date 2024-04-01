@@ -1,16 +1,11 @@
-# require_relative "../services/audio"
+require_relative "../services/audio/audio_service"
 require_relative "../services/dictionary/dictionary_service"
 require_relative "../services/nlp/nlp_service"
 require_relative "../services/translation/translation_service"
 # require_relative "../services/storage"
 # require "~/biblioglot/app/services/translation"
 
-# include NLP_Service
-# include Translation_Service
-
 require "json"
-
-# nlp = NLP_Processor
 
 class StoriesController < ApplicationController
   def index
@@ -30,14 +25,12 @@ class StoriesController < ApplicationController
     @processed_text.each do |item|
       # @translations.append(get_translation(language, item["sentence"])) # translations
       # get_words_json(language, item["tokens"]) # words
+      # audio
 
     end
-    # puts @translations
+
     puts @words
     puts @words.class
-    # @processed_text = "Hello World"
-    # puts @processed_text
-    # puts @processed_text.class
 
   end
 
