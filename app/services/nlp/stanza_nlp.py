@@ -3,7 +3,7 @@ import json
 
 # stanza.download('es')
 
-def get_json_data(content, language):
+def get_json_data(language, content):
   story = []
   process_options = "tokenize,mwt,pos,lemma,ner"
   stanza.download(lang=language, processors=process_options)
