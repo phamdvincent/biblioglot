@@ -1,0 +1,7 @@
+<h1>This is the story create page!</h1>
+
+<%= form_with(url: "/stories/process_text", data: {turnbo: false }) do %>
+  <%= label_tag :story_text, "Enter Text:" %><br>
+  <%= text_area_tag :story_text %><br>
+  <%= submit_tag "Process" %>
+<% end %>
