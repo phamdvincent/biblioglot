@@ -35,9 +35,11 @@ begin
   polly = Aws::Polly::Client.new
 
   resp = polly.synthesize_speech({
+    engine: "standard",
+    language_code: "es-MX",
     output_format: "mp3",
     text: contents,
-    voice_id: "Joanna",
+    voice_id: "Mia",
   })
 
   # Save output

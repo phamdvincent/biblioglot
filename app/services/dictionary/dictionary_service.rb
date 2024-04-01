@@ -15,17 +15,17 @@ class DynamoDBBasics
   # @param title [String] The title of the movie.
   # @param year [Integer] The release year of the movie.
   # @return [Hash] The data about the requested movie.
-  def get_item(key)
-  #   @table.query({
-  # index_name: 'words',
-  # key_condition_expression: 'word = :word',
-  # expression_attribute_values: {
-  #   ':word' => word
-  # }
-  #   })
-  @table.get_item({
-    key: {"uuid" => key}
-  })
+  def get_item(word)
+    @table.query({
+  index_name: 'word-index',
+  key_condition_expression: 'word = :word',
+  expression_attribute_values: {
+    ':word' => word
+  }
+    })
+  # @table.get_item({
+  #   key: {"uuid" => key}
+  # })
   rescue Aws::DynamoDB::Errors::ServiceError => e
     puts("Couldn't get word #{word} from table #{@table.name}:\n")
     puts("\t#{e.code}: #{e.message}")
@@ -35,7 +35,7 @@ end
 
 def run
   db = DynamoDBBasics.new("spanish_dictionary")
-  words = db.get_item("dba76cff-7344-4cb9-a2dc-132760154cd4")
+  words = db.get_item("las")
   puts words
   puts words.class
 end
