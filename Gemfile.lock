@@ -82,6 +82,9 @@ GEM
       aws-partitions (~> 1, >= 1.651.0)
       aws-sigv4 (~> 1.8)
       jmespath (~> 1, >= 1.6.1)
+    aws-sdk-dynamodb (1.106.0)
+      aws-sdk-core (~> 3, >= 3.191.0)
+      aws-sigv4 (~> 1.1)
     aws-sdk-kms (1.78.0)
       aws-sdk-core (~> 3, >= 3.191.0)
       aws-sigv4 (~> 1.1)
@@ -428,6 +431,7 @@ DEPENDENCIES
   annotate
   appdev_support
   awesome_print
+  aws-sdk-dynamodb
   aws-sdk-polly
   aws-sdk-s3
   better_errors
