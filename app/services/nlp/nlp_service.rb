@@ -3,6 +3,15 @@
 
 module Nlp
   class NlpService
+
+    def self.get_nlp(language, content)
+      PyCall.sys.path.append("./app/services/nlp")
+      # PyCall.sys.path.append('.')
+      PyCall.import_module("stanza_nlp")
+      python_module = PyCall.import_module("stanza_nlp")
+      response = python_module.get_json_data(language, content)
+      return response
+    end
   end
 end
 

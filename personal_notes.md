@@ -72,3 +72,7 @@ https://stanfordnlp.github.io/stanza/index.html#getting-started
 
 1) Create AWS account
 2) Set up IAM for authorizations
+
+## Launching with Fly.io
+
+* NameError is an error in naming conventions ('services' in app)
