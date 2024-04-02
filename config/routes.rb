@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   resources :books
   resources :stories
   #get("/", { :controller => "stories", :action => "index"})
-  root to: "stories#index"
+  root to: "home#index"
   post("/stories/process_text", { :controller => "stories", :action => "process_text" })
   # get("/stories/new", { :controller => "stories", :action => "new"})
   devise_for :users

@@ -9,7 +9,7 @@ require "securerandom"
 
 class StoriesController < ApplicationController
   def index
-    @processed_text = params[:processed_text]
+    @story = Sentence.where(book_id: 1)
   end
 
   def show
