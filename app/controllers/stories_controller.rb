@@ -25,12 +25,9 @@ class StoriesController < ApplicationController
     @processed_text.each do |item|
       # @translations.append(get_translation(language, item["sentence"])) # translations
       # get_words_json(language, item["tokens"]) # words
-      # audio
+      # get_audio_files(language, item["sentence"]) # audio
 
     end
-
-    puts @words
-    puts @words.class
 
   end
 
@@ -52,6 +49,10 @@ class StoriesController < ApplicationController
         end
       end
 
+    end
+
+    def get_audio_files(language, content)
+      Audio_Service.generate_audio(language, content)
     end
 
 end

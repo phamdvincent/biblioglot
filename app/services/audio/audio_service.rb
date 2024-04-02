@@ -22,6 +22,7 @@ module Audio_Service
       @engine = engine
       @language_code = language_code
       @content = content
+      @voice_id = voice_id
     end
 
     def get_audio
@@ -43,14 +44,21 @@ module Audio_Service
 
   end
 
-  def generate_audio(language, content)
-    
+  def self.generate_audio(language, content)
+    if language == 'es'
+      engine = 'standard'
+      language_code = 'es-ES'
+      voice_id = 'Lucia'
+    end
+
+    audio = Audio_Voice.new(engine, language_code, content, voice_id)
+    audio.get_audio
   end
 
-rescue StandardError => ex
-  puts 'Got error:'
-  puts 'Error message:'
-  puts ex.message
+# rescue StandardError => ex
+#   puts 'Got error:'
+#   puts 'Error message:'
+#   puts ex.message
 
 end
 
