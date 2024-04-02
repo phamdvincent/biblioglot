@@ -3,6 +3,7 @@
 # Table name: sentences
 #
 #  id                  :integer          not null, primary key
+#  audio               :string
 #  content             :string
 #  english_translation :string
 #  created_at          :datetime         not null

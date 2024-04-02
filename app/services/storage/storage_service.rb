@@ -18,6 +18,7 @@ module Storage_Service
       key: object_key,
       body: audio_content
     })
+    
+    return object_key
   end
 end
-

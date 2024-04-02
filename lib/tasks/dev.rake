@@ -44,3 +44,8 @@ end
 task({ :test => :environment }) do
   p User.where({ "email" => "admin@example.com" }).at(0)
 end
+
+task({ :clean_test => :environment}) do
+  Sentence.destroy_all
+  Word.destroy_all
+end
