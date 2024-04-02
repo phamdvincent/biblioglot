@@ -25,9 +25,9 @@ class StoriesController < ApplicationController
     @audio_data
     @processed_text.each do |item|
       # @translations.append(get_translation(language, item["sentence"])) # translations
-      get_words_json(language, item["tokens"]) # words
-      @audio_data = generate_audio_data(language, item["sentence"]) # audio
-      save_audio_to_storage(@audio_data, "sentence")
+      # get_words_json(language, item["tokens"]) # words
+      # @audio_data = generate_audio_data(language, item["sentence"]) # audio
+      # save_audio_to_storage(@audio_data, "sentence")
       
     end
 

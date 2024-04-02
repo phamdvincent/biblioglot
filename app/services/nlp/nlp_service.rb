@@ -8,8 +8,6 @@ module NLP_Service
     PyCall.import_module('stanza_nlp')
     python_module = PyCall.import_module('stanza_nlp')
     response = python_module.get_json_data(language, content)
-    # puts json_response
-    # puts response.class
     return response
   end
 end

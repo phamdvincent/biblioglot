@@ -11,12 +11,7 @@ module Dictionary_Service
       @dynamo_resource = Aws::DynamoDB::Resource.new(client: client)
       @table = @dynamo_resource.table(table_name)
     end
-  
-    # Gets movie data from the table for a specific movie.
-    #
-    # @param title [String] The title of the movie.
-    # @param year [Integer] The release year of the movie.
-    # @return [Hash] The data about the requested movie.
+
     def get_item(word)
       @table.query({
     index_name: 'word-index',
@@ -25,9 +20,7 @@ module Dictionary_Service
       ':word' => word
     }
       })
-    # @table.get_item({
-    #   key: {"uuid" => key}
-    # })
+
     rescue Aws::DynamoDB::Errors::ServiceError => e
       puts("Couldn't get word #{word} from table #{@table.name}:\n")
       puts("\t#{e.code}: #{e.message}")

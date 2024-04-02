@@ -10,9 +10,7 @@ module Translation_Service
     api_key = ENV["DEEPL_KEY"]
     response = python_module.get_translation(api_key, source_lang, content)
     return response
-  
-    # puts json_response
-    # puts json_response.class
+
   end
 end
 
