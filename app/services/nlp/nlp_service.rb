@@ -1,7 +1,12 @@
 # require 'json'
 # require 'pycall/import'
 
-module NlpService
+module Nlp
+  class NlpService
+  end
+end
+
+# module NlpService
 #   def self.get_nlp(language, content)
 #     PyCall.sys.path.append('./app/services/nlp')
 #     # PyCall.sys.path.append('.')
@@ -10,7 +15,7 @@ module NlpService
 #     response = python_module.get_json_data(language, content)
 #     return response
 #   end
-end
+# end
 
 # # NLP_Processor.new.get_nlp_json("El hombre es gordo. La mujer es bonita.",'es')
 
