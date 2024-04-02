@@ -11,7 +11,7 @@
 # language governing permissions and limitations under the License.
 
 require 'aws-sdk-polly'  # In v2: require 'aws-sdk'
-require 'securerandom'
+# require 'securerandom'
 
 
 module Audio_Service
@@ -34,12 +34,13 @@ module Audio_Service
         voice_id: @voice_id,
       })
 
-      first_part = SecureRandom.uuid
-      mp3_file = first_part + '.mp3'
+      # first_part = SecureRandom.uuid
+      # mp3_file = first_part + '.mp3'
+      audio_stream = resp.audio_stream.read
+      return audio_stream
+      # IO.copy_stream(resp.audio_stream, mp3_file)
 
-      IO.copy_stream(resp.audio_stream, mp3_file)
-
-      puts 'Wrote MP3 content to: ' + mp3_file
+      # puts 'Wrote MP3 content to: ' + mp3_file
     end
 
   end
@@ -52,7 +53,8 @@ module Audio_Service
     end
 
     audio = Audio_Voice.new(engine, language_code, content, voice_id)
-    audio.get_audio
+    audio_data = audio.get_audio
+    return audio_data
   end
 
 # rescue StandardError => ex

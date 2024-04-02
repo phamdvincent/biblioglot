@@ -2,10 +2,10 @@ require_relative "../services/audio/audio_service"
 require_relative "../services/dictionary/dictionary_service"
 require_relative "../services/nlp/nlp_service"
 require_relative "../services/translation/translation_service"
-# require_relative "../services/storage"
-# require "~/biblioglot/app/services/translation"
+require_relative "../services/storage/storage_service"
 
 require "json"
+require "securerandom"
 
 class StoriesController < ApplicationController
   def index
@@ -22,10 +22,12 @@ class StoriesController < ApplicationController
     @sentences = []
     @translations = []
     @words = []
+    @audio_data
     @processed_text.each do |item|
       # @translations.append(get_translation(language, item["sentence"])) # translations
-      # get_words_json(language, item["tokens"]) # words
-      get_audio_files(language, item["sentence"]) # audio
+      get_words_json(language, item["tokens"]) # words
+      @audio_data = generate_audio_data(language, item["sentence"]) # audio
+      save_audio_to_storage(@audio_data, "sentence")
       
     end
 
@@ -43,6 +45,8 @@ class StoriesController < ApplicationController
       tokens.each do |token|
         if token["upos"] != "PUNCT"
           word = token["text"].downcase
+          audio_word = generate_audio_data(language, word)
+          save_audio_to_storage(audio_word, 'word')
           word_json_list = Dictionary_Service.get_word_json_list(language, word)
           word_hash = {"word": word, "json": word_json_list}
           @words.append(word_hash)
@@ -51,8 +55,15 @@ class StoriesController < ApplicationController
 
     end
 
-    def get_audio_files(language, content)
-      Audio_Service.generate_audio(language, content)
+    def generate_audio_data(language, content)
+      return Audio_Service.generate_audio(language, content)
+    end
+
+    def save_audio_to_storage(audio_data, type)
+      content = audio_data
+      filename = SecureRandom.uuid
+      content_type = type
+      Storage_Service.save_to_storage(content, filename, content_type)
     end
 
 end
