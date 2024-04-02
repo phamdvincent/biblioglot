@@ -1,7 +1,7 @@
 # require "aws-sdk-dynamodb"
 # require "json"
 
-# module Dictionary_Service
+module DictionaryService
 #   class DynamoDBBasics
 #     attr_reader :dynamo_resource
 #     attr_reader :table
@@ -45,4 +45,4 @@
 #     return parsed_json_list
 
 #   end
-# end
+end

@@ -1,6 +1,6 @@
 # require 'aws-sdk-polly'  # In v2: require 'aws-sdk'
 
-# module Audio_Service
+module AudioService
 
 #   class Audio_Voice
 #     def initialize(engine, language_code, content, voice_id)
@@ -44,4 +44,4 @@
 # #   puts 'Error message:'
 # #   puts ex.message
 
-# end
+end

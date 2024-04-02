@@ -1,7 +1,7 @@
 # require 'json'
 # require 'pycall/import'
 
-# module Translation_Service
+module TranslationService
 #   def self.get_translation(source_lang, content)
 #     PyCall.sys.path.append('./app/services/translation')
 #     # PyCall.sys.path.append('.')
@@ -12,6 +12,6 @@
 #     return response
 
 #   end
-# end
+end
 
 # # get_translation("ES", "SERÍAN las diez de la mañana de un día de octubre.")

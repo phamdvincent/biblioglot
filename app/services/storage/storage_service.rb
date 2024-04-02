@@ -1,6 +1,6 @@
 # require "aws-sdk-s3"
 
-# module Storage_Service
+module StorageService
 #   def self.save_to_storage(content, filename, content_type)
 #     s3_client = Aws::S3::Client.new
 #     bucket_name = 'biblioglot'
@@ -21,4 +21,4 @@
     
 #     return object_key
 #   end
-# end
+end
