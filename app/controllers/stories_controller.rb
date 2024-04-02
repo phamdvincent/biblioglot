@@ -20,24 +20,24 @@ class StoriesController < ApplicationController
   end
 
   def process_text
-    language = 'es'
-    story_text = params[:story_text]
-    @processed_text = NLP_Service.get_nlp(language, story_text) # nlp
-    @translations = []
-    @words = []
-    @audio_data
-    @processed_text.each do |item|
+    # language = 'es'
+    # story_text = params[:story_text]
+    # @processed_text = NLP_Service.get_nlp(language, story_text) # nlp
+    # @translations = []
+    # @words = []
+    # @audio_data
+    # @processed_text.each do |item|
 
-      @translations.append(get_translation(language, item["sentence"])) # translations
-      translation = get_translation(language, item["sentence"])
+    #   @translations.append(get_translation(language, item["sentence"])) # translations
+    #   translation = get_translation(language, item["sentence"])
 
-      get_words_json(language, item["tokens"]) # words
+    #   get_words_json(language, item["tokens"]) # words
 
-      @audio_data = generate_audio_data(language, item["sentence"]) # audio
-      audio_object_key = save_audio_to_storage(@audio_data, "sentence") # storage
+    #   @audio_data = generate_audio_data(language, item["sentence"]) # audio
+    #   audio_object_key = save_audio_to_storage(@audio_data, "sentence") # storage
 
-      sentence = Sentence.new({content: item["sentence"], language_id: 1, english_translation: translation, book_id: 1, audio: audio_object_key})
-      sentence.save
+    #   sentence = Sentence.new({content: item["sentence"], language_id: 1, english_translation: translation, book_id: 1, audio: audio_object_key})
+    #   sentence.save
     end
 
     # redirect_to '/', locals: { processed_text: @processed_text }
