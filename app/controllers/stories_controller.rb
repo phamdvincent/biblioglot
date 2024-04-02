@@ -7,7 +7,7 @@
 # require "json"
 # require "securerandom"
 
-# class StoriesController < ApplicationController
+class StoriesController < ApplicationController
 #   def index
 #     @story = Sentence.where(book_id: 1)
 #   end
@@ -91,4 +91,4 @@
 #   #     return Storage_Service.save_to_storage(content, filename, content_type)
 #   #   end
 
-# end
+end
