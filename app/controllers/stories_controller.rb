@@ -18,15 +18,15 @@ class StoriesController < ApplicationController
   def process_text
     language = 'es'
     story_text = params[:story_text]
-    @processed_text = NLP_Service.get_nlp(language, story_text)
+    @processed_text = NLP_Service.get_nlp(language, story_text) # nlp
     @sentences = []
     @translations = []
     @words = []
     @processed_text.each do |item|
       # @translations.append(get_translation(language, item["sentence"])) # translations
       # get_words_json(language, item["tokens"]) # words
-      # get_audio_files(language, item["sentence"]) # audio
-
+      get_audio_files(language, item["sentence"]) # audio
+      
     end
 
   end

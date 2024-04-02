@@ -18,7 +18,7 @@ module Audio_Service
 
   class Audio_Voice
     def initialize(engine, language_code, content, voice_id)
-      @polly = Aws::Polly::Client.new
+      @polly = Aws::Polly::Client.new(region: 'us-east-1')
       @engine = engine
       @language_code = language_code
       @content = content
@@ -46,9 +46,9 @@ module Audio_Service
 
   def self.generate_audio(language, content)
     if language == 'es'
-      engine = 'standard'
+      engine = 'neural'
       language_code = 'es-ES'
-      voice_id = 'Lucia'
+      voice_id = 'Sergio'
     end
 
     audio = Audio_Voice.new(engine, language_code, content, voice_id)
