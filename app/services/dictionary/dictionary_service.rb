@@ -1,5 +1,5 @@
-# require "aws-sdk-dynamodb"
-# require "json"
+require "aws-sdk-dynamodb"
+require "json"
 
 module Dictionary
   class DictionaryService

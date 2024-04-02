@@ -1,4 +1,4 @@
-# require 'aws-sdk-polly'  # In v2: require 'aws-sdk'
+require 'aws-sdk-polly'  # In v2: require 'aws-sdk'
 
 module Audio
   class AudioService

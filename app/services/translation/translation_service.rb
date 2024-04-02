@@ -1,5 +1,5 @@
-# require 'json'
-# require 'pycall/import'
+require 'json'
+require 'pycall/import'
 
 module Translation
   class TranslationService
