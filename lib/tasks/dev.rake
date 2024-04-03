@@ -56,7 +56,7 @@ task({:restart => :environment }) do
   Book.destroy_all
   Progress.destroy_all
   Sentence.destroy_all
-  Word_Sentence_Link.destroy_all
+  WordSentenceLink.destroy_all
   Word.destroy_all
 
   usernames = ["admin", "user"]
