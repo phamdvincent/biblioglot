@@ -11,7 +11,7 @@
 #  language_id      :integer
 #
 class Book < ApplicationRecord
-  belongs_to :languages
+  belongs_to :language
   has_many :progresses
   has_many :users, through: :progresses
   has_many :sentences

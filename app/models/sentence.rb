@@ -12,7 +12,7 @@
 #  language_id         :integer
 #
 class Sentence < ApplicationRecord
-  belongs_to :books
+  belongs_to :book
   has_many :word_sentence_links
   has_many :words, through: :word_sentence_links
 end
