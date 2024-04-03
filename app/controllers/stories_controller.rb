@@ -38,8 +38,9 @@ class StoriesController < ApplicationController
     #   audio_object_key = save_audio_to_storage(@audio_data, "sentence") # storage
 
     # sentence = Sentence.new({content: item["sentence"], language_id: 1, english_translation: translation, book_id: 1, audio: audio_object_key})
-      sentence = Sentence.new({content: item["sentence"], language_id: 1, english_translation: "This is translation", book_id: 1, audio: "This is audio"})
-      sentence.save
+      # sentence = Sentence.new({content: item["sentence"], language_id: 1, english_translation: "This is translation", book_id: 1, audio: "This is audio"})
+      # sentence.save
+      puts item["sentence"]
     end
     redirect_to "/books"
     # redirect_to '/', locals: { processed_text: @processed_text }
