@@ -11,4 +11,7 @@
 #  word_id     :integer
 #
 class WordSentenceLink < ApplicationRecord
+  belongs_to :sentences
+  belongs_to :languages
+  belongs_to :words
 end

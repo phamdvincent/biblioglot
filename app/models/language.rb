@@ -10,4 +10,8 @@
 #  updated_at    :datetime         not null
 #
 class Language < ApplicationRecord
+  has_many :books
+  has_many :sentences
+  has_many :word_sentence_links
+  has_many :words
 end

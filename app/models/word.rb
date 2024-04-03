@@ -12,4 +12,6 @@
 #  language_id    :integer
 #
 class Word < ApplicationRecord
+  has_many :word_sentence_links
+  belongs_to :languages
 end
