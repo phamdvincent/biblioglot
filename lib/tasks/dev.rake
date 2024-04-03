@@ -66,4 +66,5 @@ task({:restart => :environment }) do
     user.email = "#{username}@example.com"
     user.password = "password"
     user.save
+  end
 end
