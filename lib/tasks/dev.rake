@@ -49,3 +49,21 @@ end
 #   Sentence.destroy_all
 #   Word.destroy_all
 # end
+
+task({:restart => :environment }) do
+  User.destroy_all
+  Language.destroy_all
+  Book.destroy_all
+  Progress.destroy_all
+  Sentence.destroy_all
+  Word_Sentence_Link.destroy_all
+  Word.destroy_all
+
+  usernames = ["admin", "user"]
+
+  usernames.each do |username|
+    user = User.new
+    user.email = "#{username}@example.com"
+    user.password = "password"
+    user.save
+end
