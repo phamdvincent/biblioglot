@@ -67,4 +67,21 @@ task({:restart => :environment }) do
     user.password = "password"
     user.save
   end
+
+  language = Language.new
+  language.language_code = "es"
+  language.english_name = "spanish"
+  language.name = "español"
+  language.save
+
+  language.books.create({ title: "El árbol de la ciencia",
+                          author: "Pío Baroja",
+                          publication_year: "1911"
+                        })
+  
+  language.books.create({ title: "Ganarás el pan...",
+                          author: "Pedro Mata",
+                          publication_year: "1919"
+                          })
+
 end

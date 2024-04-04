@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   resources :books
   resources :stories
   # root to: "home#index"
-  root to: "stories#new"
+  root to: "books#index"
   #get("/", { :controller => "stories", :action => "index"})
   post("/stories/process_text", { :controller => "stories", :action => "process_text" })
   # get("/stories/new", { :controller => "stories", :action => "new"})

@@ -13,4 +13,7 @@
 class Progress < ApplicationRecord
   belongs_to :user
   belongs_to :book
+
+  attribute :location, :integer, default: 0
+  attribute :progress_percentage, :integer, default: 0
 end

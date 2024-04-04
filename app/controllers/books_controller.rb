@@ -4,12 +4,14 @@ class BooksController < ApplicationController
   # GET /books or /books.json
   def index
     @books = Book.all
-    @story = Sentence.all
+    @progress = Progress.new
   end
 
   # GET /books/1 or /books/1.json
   def show
-    @story = Sentence.where(book_id: 1)
+    if !current_user.books.include?(@book)
+      current_user.books << @book 
+    end
 
   end
 

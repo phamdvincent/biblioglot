@@ -5,11 +5,18 @@
 <div id="books">
   <% @books.each do |book| %>
     <%= render book %>
-    <p>
-      <%= link_to "Show this book", book %>
-    </p>
+
+    <% if !current_user.books.include?(book) %>
+      <p>
+        <%= link_to "Start this book!", book %>
+      </p>
+    <% else %>
+      <p>
+        <%= link_to "Continue this book!", book %>
+      </p>
+    <% end %>
+
   <% end %>
 </div>
 
 <%= link_to "New book", new_book_path %>
-
