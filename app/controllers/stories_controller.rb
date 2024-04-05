@@ -10,7 +10,7 @@ include Nlp
 
 class StoriesController < ApplicationController
   def index
-    @story = Sentence.where(book_id: 1)
+    # @story = Sentence.where(book_id: 1)
   end
 
   def show
@@ -41,7 +41,8 @@ class StoriesController < ApplicationController
       # sentence = Sentence.new({content: item["sentence"], language_id: 1, english_translation: "This is translation", book_id: 1, audio: "This is audio"})
       # sentence.save
     end
-    redirect_to "/books"
+    puts @processed_text
+    # redirect_to "/books"
     # redirect_to '/', locals: { processed_text: @processed_text }
     # redirect_to story_path(processed_text: @process_text)
 

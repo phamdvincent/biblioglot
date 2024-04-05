@@ -2,6 +2,23 @@
 
 <%= render @book %>
 
+<% @book.sentences.each do |sentence| %>
+  <p> <%= sentence.id %>: <%= sentence.content%> | translation: <%= sentence.english_translation %> </p>
+<% end %>
+
+<%= form_with(url: "/books/process_text", data: {turnbo: false }) do %>
+  <%= hidden_field_tag 'user_id', current_user.id %>
+  <%= hidden_field_tag 'book_id', @book.id %>
+
+  <%= label_tag :story_text, "Enter Text:" %>
+  <%#= text_area_tag :story_text %>
+  <br>
+  <%= text_area_tag :story_text, '', rows: 4, cols: 40 %>
+  <%= submit_tag "Process" %>
+<% end %>
+
+
+
 <div>
   <%= link_to "Edit this book", edit_book_path(@book) %> |
   <%= link_to "Back to books", books_path %>

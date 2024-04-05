@@ -14,7 +14,7 @@ module Nlp
     #   return response
     # end
     def self.get_nlp(language, content)
-      uri = URI.parse("http://ec2-3-15-8-181.us-east-2.compute.amazonaws.com:5000/get_nlp")
+      uri = URI.parse("http://ec2-3-22-224-208.us-east-2.compute.amazonaws.com:80/cgi-bin/nlp.cgi")
       http = Net::HTTP.new(uri.host, uri.port)
   
       # Create a JSON object to send
@@ -28,6 +28,7 @@ module Nlp
   
       # Send the request
       response = http.request(request)
+      puts "kfjldsfjdfjdjfdslkfjdkfklfjlkfjeoiruewireoiruoi3498374398743984739856397398sihdsfhdshhhh" + response.body
       processed_story = JSON.parse(response.body)["processed_story"]
       return processed_story
     end

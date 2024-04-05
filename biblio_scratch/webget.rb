@@ -11,11 +11,11 @@ require 'uri'
 require 'net/http'
 require 'json'
 
-uri = URI.parse("http://ec2-3-15-8-181.us-east-2.compute.amazonaws.com:5000/get_nlp")
+uri = URI.parse("http://ec2-18-117-155-56.us-east-2.compute.amazonaws.com:80/cgi-bin/nlp.cgi")
 http = Net::HTTP.new(uri.host, uri.port)
 
 # Create a JSON object to send
-data = { message: "Hello, Flask!" }
+data = { content: "El hombre es gordo.", language: 'es' }
 json_data = data.to_json
 
 # Prepare the request

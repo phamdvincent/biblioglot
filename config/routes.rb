@@ -9,7 +9,8 @@ Rails.application.routes.draw do
   # root to: "home#index"
   root to: "books#index"
   #get("/", { :controller => "stories", :action => "index"})
-  post("/stories/process_text", { :controller => "stories", :action => "process_text" })
+  # post("/stories/process_text", { :controller => "stories", :action => "process_text" })
+  post("/books/process_text", { :controller => "books", :action => "process_text" })
   # get("/stories/new", { :controller => "stories", :action => "new"})
   devise_for :users
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

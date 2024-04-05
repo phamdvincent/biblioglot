@@ -1,5 +1,8 @@
+require_relative "../services/nlp/nlp_service"
+include Nlp
+
 class BooksController < ApplicationController
-  before_action :set_book, only: %i[ show edit update destroy ]
+  before_action :set_book, only: %i[ show edit update destroy]
 
   # GET /books or /books.json
   def index
@@ -10,9 +13,8 @@ class BooksController < ApplicationController
   # GET /books/1 or /books/1.json
   def show
     if !current_user.books.include?(@book)
-      current_user.books << @book 
+      current_user.books << @book
     end
-
   end
 
   # GET /books/new
@@ -62,14 +64,30 @@ class BooksController < ApplicationController
     end
   end
 
-  private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_book
-      @book = Book.find(params[:id])
+  def process_text
+    @book = Book.find(params[:book_id])
+    language = @book.language.language_code
+    story_text = params[:story_text]
+    @processed_text = NlpService.get_nlp(language, story_text) # nlp
+    @processed_text.each do |item|
+      translation = "translation" # TO ADD!!! DONT FORGET!!!!!
+      audio_path = "audio_path" # TO ADD!!! DONT FORGET!!!!!
+      sentence = Sentence.new(book_id: @book.id, content: item["sentence"], language_id: @book.language_id, audio: audio_path, english_translation: translation)
+      sentence.save
     end
+    redirect_to "/books/#{@book.id}/show"
+    # puts @book.sentences
+  end
 
-    # Only allow a list of trusted parameters through.
-    def book_params
-      params.require(:book).permit(:title, :author, :language_id, :publication_year)
-    end
+  private
+
+  # Use callbacks to share common setup or constraints between actions.
+  def set_book
+    @book = Book.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def book_params
+    params.require(:book).permit(:title, :author, :language_id, :publication_year)
+  end
 end
