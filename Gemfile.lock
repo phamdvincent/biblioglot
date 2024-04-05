@@ -132,6 +132,7 @@ GEM
       irb (>= 1.5.0)
       reline (>= 0.3.1)
     debug_inspector (1.1.0)
+    deepl-rb (2.5.3)
     devise (4.9.2)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
@@ -440,6 +441,7 @@ DEPENDENCIES
   bootsnap
   capybara
   debug
+  deepl-rb
   devise
   dotenv-rails
   draft_generators

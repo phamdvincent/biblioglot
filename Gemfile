@@ -60,7 +60,11 @@ gem "aws-sdk-s3"
 # Use AWS Polly in project
 gem "aws-sdk-polly"
 
+# Use DynamoDB in project
 gem "aws-sdk-dynamodb"
+
+# Use Deepl in project
+gem 'deepl-rb', require: 'deepl'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem

@@ -1,6 +1,9 @@
 require_relative "../services/nlp/nlp_service"
 include Nlp
 
+require_relative "../services/translation/translation_service"
+include Translation
+
 class BooksController < ApplicationController
   before_action :set_book, only: %i[ show edit update destroy]
 
@@ -70,7 +73,7 @@ class BooksController < ApplicationController
     story_text = params[:story_text]
     @processed_text = NlpService.get_nlp(language, story_text) # nlp
     @processed_text.each do |item|
-      translation = "translation" # TO ADD!!! DONT FORGET!!!!!
+      translation = TranslationService.get_translation(language, item["sentence"])
       audio_path = "audio_path" # TO ADD!!! DONT FORGET!!!!!
       sentence = Sentence.new(book_id: @book.id, content: item["sentence"], language_id: @book.language_id, audio: audio_path, english_translation: translation)
       sentence.save
