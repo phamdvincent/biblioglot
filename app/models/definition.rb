@@ -5,7 +5,7 @@
 #  id          :integer          not null, primary key
 #  definition  :string
 #  dict_pos    :string
-#  nlp_pos     :string
+#  nlp_upos    :string
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #  language_id :integer
