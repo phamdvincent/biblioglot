@@ -76,7 +76,7 @@ class BooksController < ApplicationController
     story_text = params[:story_text]
     @processed_story = NlpService.get_nlp(language, story_text) # nlp
 
-    save_sentences(language, @book.id, @processed_story)
+    save_story_to_db(language, @book.id, @processed_story)
 
     redirect_to "/books/#{@book.id}/show"
     # puts @book.sentences
@@ -92,6 +92,10 @@ class BooksController < ApplicationController
   # Only allow a list of trusted parameters through.
   def book_params
     params.require(:book).permit(:title, :author, :language_id, :publication_year)
+  end
+
+  def save_story_to_db(language, book_id, processed_story)
+    save_sentences(language, book_id, processed_story)
   end
 
   def save_sentences(language, book_id, processed_story)
