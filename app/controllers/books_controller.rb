@@ -71,14 +71,10 @@ class BooksController < ApplicationController
     @book = Book.find(params[:book_id])
     language = @book.language.language_code
     story_text = params[:story_text]
-    @processed_text = NlpService.get_nlp(language, story_text) # nlp
-    @processed_text.each do |item|
-      translation = "translation_placeholder" # TranslationService.get_translation(language, item["sentence"])
-      audio_path = "audio_path_placeholder" # TO ADD!!! DONT FORGET!!!!!
-      sentence = Sentence.new(book_id: @book.id, content: item["sentence"], language_id: @book.language_id, audio: audio_path, english_translation: translation)
-      sentence.save
-      puts "id: #{sentence.id}"
-    end
+    @processed_story = NlpService.get_nlp(language, story_text) # nlp
+
+    save_sentences(language, @book.id, @processed_story)
+
     redirect_to "/books/#{@book.id}/show"
     # puts @book.sentences
   end
@@ -95,29 +91,47 @@ class BooksController < ApplicationController
     params.require(:book).permit(:title, :author, :language_id, :publication_year)
   end
 
-  def get_words_json(language, tokens)
-    tokens.each do |token|
+  def save_sentences(language, book_id, processed_story)
+    processed_story.each_with_index do |item, sentence_index_in_story|
+      translation = "translation_placeholder" # TranslationService.get_translation(language, item["sentence"])
+      audio_path = "audio_path_placeholder" # TO ADD!!! DONT FORGET!!!!!
+      sentence = Sentence.new(book_id: book_id, content: item["sentence"], language_id: @book.language_id, audio: audio_path, english_translation: translation, index_in_story:sentence_index_in_sentence)
+      sentence.save
+
+      save_words(language, sentence.id, item["tokens"])
+    end
+  end
+
+  def save_words(language, sentence_id, tokens)
+    tokens.each_with_index do |token, word_index_in_sentence|
       if token["upos"] != "PUNCT"
-        word = token["text"].downcase
+        word_text = token["text"].downcase
 
-        # audio_word = generate_audio_data(language, word)
+        # audio_word = generate_audio_data(language, word_text)
         audio_object_key = "audio_path_placeholder" # save_audio_to_storage(audio_word, "word")
+        
+        word = Word.new({content: word_text, audio: audio_object_key, language_id: @book.language_id,})
+        word.save
 
-        word_json_list = Dictionary_Service.get_word_json_list(language, word)
-        word_json_list.each do |item|
-          part_of_speech = item["pos"]
-          if item["senses"].at(0).key?("glosses")
-            definition = item["senses"].at(0)["glosses"]
-          else
-            definition = "not found"
-          end
+        word_audio_timestamp = "word_audio_timestamp_placeholder"
+        word_sentence_link = WordSentenceLink.new({ sentence_id:sentence_id, word_id: word.id, language_id: @book.language.id, book_id: @book.id, index_in_sentence: word_index_in_sentence, word_audio_timestamp: word_audio_timestamp})
+        word_sentence_link.save
 
-          word_db = Word.new({ word: word, part_of_speech: part_of_speech, definition: definition, audio: audio_object_key})
-          # word_db.save
-        end
-        # word_hash = {"word": word, "json": word_json_list}
-        # @words.append(word_hash)
+        # save_definitions(language, word_db.id, token)
       end
     end
   end
+
+  # def save_definitions(language, word_id, token)
+  #   nlp_pos = token["upos"]
+  #   word_json_list = Dictionary_Service.get_word_json_list(language, token["text"].downcase)
+  #   word_json_list.each do |item|
+  #     nlp_pos = item["pos"]
+  #     if item["senses"].at(0).key?("glosses")
+  #       definition = item["senses"].at(0)["glosses"]
+  #     else
+  #       definition = "not found"
+  #     end
+  #   end
+  # end
 end
