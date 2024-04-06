@@ -4,6 +4,9 @@ include Nlp
 require_relative "../services/translation/translation_service"
 include Translation
 
+require_relative "../services/dictionary/dictionary_service"
+include Dictionary
+
 class BooksController < ApplicationController
   before_action :set_book, only: %i[ show edit update destroy ]
 
@@ -115,27 +118,30 @@ class BooksController < ApplicationController
           word = Word.new({ content: word_text, audio: audio_object_key, language_id: @book.language_id })
           word.save
           word_in_db = word
+          save_definitions(language, word_in_db.id, token)
         end
         
         word_audio_timestamp = "word_audio_timestamp_placeholder"
         word_sentence_link = WordSentenceLink.new({ sentence_id: sentence_id, word_id: word_in_db.id, language_id: @book.language.id, book_id: @book.id, index_in_sentence: word_index_in_sentence, word_audio_timestamp: word_audio_timestamp })
         word_sentence_link.save
 
-        # save_definitions(language, word_db.id, token)
       end
     end
   end
 
-  # def save_definitions(language, word_id, token)
-  #   nlp_pos = token["upos"]
-  #   word_json_list = Dictionary_Service.get_word_json_list(language, token["text"].downcase)
-  #   word_json_list.each do |item|
-  #     nlp_pos = item["pos"]
-  #     if item["senses"].at(0).key?("glosses")
-  #       definition = item["senses"].at(0)["glosses"]
-  #     else
-  #       definition = "not found"
-  #     end
-  #   end
-  # end
+  def save_definitions(language, word_in_db_id, token)
+    nlp_upos = token["upos"]
+    word_json_list = DictionaryService.get_word_json_list(language, token["text"].downcase)
+    word_json_list.each do |item|
+      dict_pos = item["pos"]
+      if item["senses"].at(0).key?("glosses")
+        definition_text = item["senses"].at(0)["glosses"]
+      else
+        definition_text = "Definition not found"
+      end
+
+      definition = Definition.new({ word_id: word_in_db_id, definition: definition_text, dict_pos: dict_pos, language_id: @book.language_id, nlp_upos: nlp_upos })
+      definition.save
+    end
+  end
 end
