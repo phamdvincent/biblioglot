@@ -125,3 +125,5 @@ group :test do
   gem "rspec-html-matchers"
   gem "webmock"
 end
+
+gem "dockerfile-rails", ">= 1.6", :group => :development

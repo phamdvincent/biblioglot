@@ -1,0 +1,14 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Definitions</h1>
+
+<div id="definitions">
+  <% @definitions.each do |definition| %>
+    <%= render definition %>
+    <p>
+      <%= link_to "Show this definition", definition %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New definition", new_definition_path %>

@@ -6,6 +6,7 @@
 #  audio               :string
 #  content             :string
 #  english_translation :string
+#  index_in_book       :integer
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null
 #  book_id             :integer

@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :definitions
   resources :words
   resources :word_sentence_links
   resources :sentences

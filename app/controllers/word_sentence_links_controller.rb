@@ -65,6 +65,6 @@ class WordSentenceLinksController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def word_sentence_link_params
-      params.require(:word_sentence_link).permit(:sentence_id, :word_id, :language_id, :book_id)
+      params.require(:word_sentence_link).permit(:sentence_id, :word_id, :language_id, :book_id, :index_in_sentence, :word_audio_timestamp)
     end
 end

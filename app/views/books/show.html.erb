@@ -10,14 +10,12 @@
   <%= hidden_field_tag 'user_id', current_user.id %>
   <%= hidden_field_tag 'book_id', @book.id %>
 
-  <%= label_tag :story_text, "Enter Text:" %>
+  <%= label_tag :story_text, "Enter #{@book.language.english_name.capitalize} Text:" %>
   <%#= text_area_tag :story_text %>
   <br>
   <%= text_area_tag :story_text, '', rows: 4, cols: 40 %>
   <%= submit_tag "Process" %>
 <% end %>
-
-
 
 <div>
   <%= link_to "Edit this book", edit_book_path(@book) %> |

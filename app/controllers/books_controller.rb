@@ -5,7 +5,7 @@ require_relative "../services/translation/translation_service"
 include Translation
 
 class BooksController < ApplicationController
-  before_action :set_book, only: %i[ show edit update destroy]
+  before_action :set_book, only: %i[ show edit update destroy ]
 
   # GET /books or /books.json
   def index
@@ -73,10 +73,11 @@ class BooksController < ApplicationController
     story_text = params[:story_text]
     @processed_text = NlpService.get_nlp(language, story_text) # nlp
     @processed_text.each do |item|
-      translation = TranslationService.get_translation(language, item["sentence"])
-      audio_path = "audio_path" # TO ADD!!! DONT FORGET!!!!!
+      translation = "translation_placeholder" # TranslationService.get_translation(language, item["sentence"])
+      audio_path = "audio_path_placeholder" # TO ADD!!! DONT FORGET!!!!!
       sentence = Sentence.new(book_id: @book.id, content: item["sentence"], language_id: @book.language_id, audio: audio_path, english_translation: translation)
       sentence.save
+      puts "id: #{sentence.id}"
     end
     redirect_to "/books/#{@book.id}/show"
     # puts @book.sentences
@@ -93,4 +94,30 @@ class BooksController < ApplicationController
   def book_params
     params.require(:book).permit(:title, :author, :language_id, :publication_year)
   end
+
+  # def get_words_json(language, tokens)
+  #   tokens.each do |token|
+  #     if token["upos"] != "PUNCT"
+  #       word = token["text"].downcase
+
+  #       # audio_word = generate_audio_data(language, word)
+  #       audio_object_key = "audio_path_placeholder" # save_audio_to_storage(audio_word, "word")
+
+  #       word_json_list = Dictionary_Service.get_word_json_list(language, word)
+  #       word_json_list.each do |item|
+  #         part_of_speech = item["pos"]
+  #         if item["senses"].at(0).key?("glosses")
+  #           definition = item["senses"].at(0)["glosses"]
+  #         else
+  #           definition = "not found"
+  #         end
+
+  #         word_db = Word.new({ word: word, part_of_speech: part_of_speech, definition: definition, audio: audio_object_key})
+  #         # word_db.save
+  #       end
+  #       # word_hash = {"word": word, "json": word_json_list}
+  #       # @words.append(word_hash)
+  #     end
+  #   end
+  # end
 end

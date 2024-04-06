@@ -29,6 +29,10 @@ https://learn.firstdraft.com/lessons/137
 2) rails generate scaffold book title:string description:text released:boolean... \<column_name\>:\<type\>
 3) rake db:migrate
 
+### Adding column to table
+
+* rails g migration AddCToBooks c:date
+
 ### Learn Module
 Getting started with scaffolds <br>
 https://learn.firstdraft.com/lessons/158-getting-started-with-scaffolds

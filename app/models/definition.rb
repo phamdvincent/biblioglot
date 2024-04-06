@@ -1,15 +1,15 @@
 # == Schema Information
 #
-# Table name: words
+# Table name: definitions
 #
 #  id          :integer          not null, primary key
-#  audio       :string
-#  word        :string
+#  definition  :string
+#  dict_pos    :string
+#  nlp_pos     :string
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #  language_id :integer
+#  word_id     :integer
 #
-class Word < ApplicationRecord
-  has_many :word_sentence_links
-  belongs_to :language
+class Definition < ApplicationRecord
 end

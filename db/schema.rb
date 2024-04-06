@@ -10,12 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_04_02_171448) do
+ActiveRecord::Schema[7.0].define(version: 2024_04_06_130813) do
   create_table "books", force: :cascade do |t|
     t.string "title"
     t.string "author"
     t.integer "language_id"
     t.string "publication_year"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "definitions", force: :cascade do |t|
+    t.integer "word_id"
+    t.string "definition"
+    t.string "dict_pos"
+    t.integer "language_id"
+    t.string "nlp_pos"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -45,6 +55,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_02_171448) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "audio"
+    t.integer "index_in_book"
   end
 
   create_table "users", force: :cascade do |t|
@@ -66,12 +77,12 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_02_171448) do
     t.integer "book_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "index_in_sentence"
+    t.string "word_audio_timestamp"
   end
 
   create_table "words", force: :cascade do |t|
     t.string "word"
-    t.string "part_of_speech"
-    t.string "definition"
     t.string "audio"
     t.integer "language_id"
     t.datetime "created_at", null: false
