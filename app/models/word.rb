@@ -11,5 +11,6 @@
 #
 class Word < ApplicationRecord
   has_many :word_sentence_links
+  has_many :definitions
   belongs_to :language
 end

@@ -14,4 +14,5 @@ class Language < ApplicationRecord
   has_many :sentences
   has_many :word_sentence_links
   has_many :words
+  has_many :definitions
 end

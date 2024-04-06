@@ -95,29 +95,29 @@ class BooksController < ApplicationController
     params.require(:book).permit(:title, :author, :language_id, :publication_year)
   end
 
-  # def get_words_json(language, tokens)
-  #   tokens.each do |token|
-  #     if token["upos"] != "PUNCT"
-  #       word = token["text"].downcase
+  def get_words_json(language, tokens)
+    tokens.each do |token|
+      if token["upos"] != "PUNCT"
+        word = token["text"].downcase
 
-  #       # audio_word = generate_audio_data(language, word)
-  #       audio_object_key = "audio_path_placeholder" # save_audio_to_storage(audio_word, "word")
+        # audio_word = generate_audio_data(language, word)
+        audio_object_key = "audio_path_placeholder" # save_audio_to_storage(audio_word, "word")
 
-  #       word_json_list = Dictionary_Service.get_word_json_list(language, word)
-  #       word_json_list.each do |item|
-  #         part_of_speech = item["pos"]
-  #         if item["senses"].at(0).key?("glosses")
-  #           definition = item["senses"].at(0)["glosses"]
-  #         else
-  #           definition = "not found"
-  #         end
+        word_json_list = Dictionary_Service.get_word_json_list(language, word)
+        word_json_list.each do |item|
+          part_of_speech = item["pos"]
+          if item["senses"].at(0).key?("glosses")
+            definition = item["senses"].at(0)["glosses"]
+          else
+            definition = "not found"
+          end
 
-  #         word_db = Word.new({ word: word, part_of_speech: part_of_speech, definition: definition, audio: audio_object_key})
-  #         # word_db.save
-  #       end
-  #       # word_hash = {"word": word, "json": word_json_list}
-  #       # @words.append(word_hash)
-  #     end
-  #   end
-  # end
+          word_db = Word.new({ word: word, part_of_speech: part_of_speech, definition: definition, audio: audio_object_key})
+          # word_db.save
+        end
+        # word_hash = {"word": word, "json": word_json_list}
+        # @words.append(word_hash)
+      end
+    end
+  end
 end

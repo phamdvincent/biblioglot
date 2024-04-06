@@ -12,4 +12,6 @@
 #  word_id     :integer
 #
 class Definition < ApplicationRecord
+  belongs_to :word
+  belongs_to :language
 end
