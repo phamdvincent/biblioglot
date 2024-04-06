@@ -95,7 +95,7 @@ class BooksController < ApplicationController
     processed_story.each_with_index do |item, sentence_index_in_story|
       translation = "translation_placeholder" # TranslationService.get_translation(language, item["sentence"])
       audio_path = "audio_path_placeholder" # TO ADD!!! DONT FORGET!!!!!
-      sentence = Sentence.new(book_id: book_id, content: item["sentence"], language_id: @book.language_id, audio: audio_path, english_translation: translation, index_in_story:sentence_index_in_sentence)
+      sentence = Sentence.new(book_id: book_id, content: item["sentence"], language_id: @book.language_id, audio: audio_path, english_translation: translation, index_in_book: sentence_index_in_story)
       sentence.save
 
       save_words(language, sentence.id, item["tokens"])
@@ -109,12 +109,16 @@ class BooksController < ApplicationController
 
         # audio_word = generate_audio_data(language, word_text)
         audio_object_key = "audio_path_placeholder" # save_audio_to_storage(audio_word, "word")
-        
-        word = Word.new({content: word_text, audio: audio_object_key, language_id: @book.language_id,})
-        word.save
+        word_in_db = Word.find_by(content: word_text)
 
+        if !word_in_db
+          word = Word.new({ content: word_text, audio: audio_object_key, language_id: @book.language_id })
+          word.save
+          word_in_db = word
+        end
+        
         word_audio_timestamp = "word_audio_timestamp_placeholder"
-        word_sentence_link = WordSentenceLink.new({ sentence_id:sentence_id, word_id: word.id, language_id: @book.language.id, book_id: @book.id, index_in_sentence: word_index_in_sentence, word_audio_timestamp: word_audio_timestamp})
+        word_sentence_link = WordSentenceLink.new({ sentence_id: sentence_id, word_id: word_in_db.id, language_id: @book.language.id, book_id: @book.id, index_in_sentence: word_index_in_sentence, word_audio_timestamp: word_audio_timestamp })
         word_sentence_link.save
 
         # save_definitions(language, word_db.id, token)
