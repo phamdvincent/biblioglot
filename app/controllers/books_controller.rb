@@ -7,6 +7,14 @@ include Translation
 require_relative "../services/dictionary/dictionary_service"
 include Dictionary
 
+require_relative "../services/audio/audio_service"
+include Audio
+
+require_relative "../services/storage/storage_service"
+include Storage
+
+require "securerandom"
+
 class BooksController < ApplicationController
   before_action :set_book, only: %i[ show edit update destroy ]
 
@@ -100,23 +108,29 @@ class BooksController < ApplicationController
 
   def save_sentences(language, book_id, processed_story)
     processed_story.each_with_index do |item, sentence_index_in_story|
-      translation = "translation_placeholder" # TranslationService.get_translation(language, item["sentence"])
-      audio_path = "audio_path_placeholder" # TO ADD!!! DONT FORGET!!!!!
-      sentence = Sentence.new(book_id: book_id, content: item["sentence"], language_id: @book.language_id, audio: audio_path, english_translation: translation, index_in_book: sentence_index_in_story)
+      sentence_text = item["sentence"]
+      translation = TranslationService.get_translation(language, sentence_text)
+
+      audio_sentence = AudioService.generate_audio_data(language, sentence_text, "audio")
+      audio_object_key = StorageService.save_to_storage(audio_sentence, SecureRandom.uuid, "sentence")
+      word_audio_timestamps = AudioService.generate_audio_data(language, sentence_text, "timestamp")
+
+      sentence = Sentence.new(book_id: book_id, content: sentence_text, language_id: @book.language_id, audio: audio_object_key, english_translation: translation, index_in_book: sentence_index_in_story)
       sentence.save
 
-      save_words(language, sentence.id, item["tokens"])
+      save_words(language, sentence.id, item["tokens"], word_audio_timestamps)
     end
   end
 
-  def save_words(language, sentence_id, tokens)
+  def save_words(language, sentence_id, tokens, word_audio_timestamps)
     tokens.each_with_index do |token, word_index_in_sentence|
       if token["upos"] != "PUNCT"
         word_text = token["text"].downcase
 
-        # audio_word = generate_audio_data(language, word_text)
-        audio_object_key = "audio_path_placeholder" # save_audio_to_storage(audio_word, "word")
         word_in_db = Word.find_by(content: word_text)
+
+        audio_word = AudioService.generate_audio_data(language, word_text, "audio")
+        audio_object_key = StorageService.save_to_storage(audio_word, SecureRandom.uuid, "word")
 
         if !word_in_db
           word = Word.new({ content: word_text, audio: audio_object_key, language_id: @book.language_id })
@@ -124,11 +138,9 @@ class BooksController < ApplicationController
           word_in_db = word
           save_definitions(language, word_in_db.id, token)
         end
-        
-        word_audio_timestamp = "word_audio_timestamp_placeholder"
-        word_sentence_link = WordSentenceLink.new({ sentence_id: sentence_id, word_id: word_in_db.id, language_id: @book.language.id, book_id: @book.id, index_in_sentence: word_index_in_sentence, word_audio_timestamp: word_audio_timestamp })
-        word_sentence_link.save
 
+        word_sentence_link = WordSentenceLink.new({ sentence_id: sentence_id, word_id: word_in_db.id, language_id: @book.language.id, book_id: @book.id, index_in_sentence: word_index_in_sentence, word_audio_timestamp: word_audio_timestamps[word_index_in_sentence]["time"] })
+        word_sentence_link.save
       end
     end
   end
