@@ -58,6 +58,7 @@ task({:restart => :environment }) do
   Sentence.destroy_all
   WordSentenceLink.destroy_all
   Word.destroy_all
+  Definition.destroy_all
 
   usernames = ["admin", "user"]
 

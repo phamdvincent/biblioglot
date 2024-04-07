@@ -4,6 +4,12 @@
 
 <% @book.sentences.each do |sentence| %>
   <p> <%= sentence.id %>: <%= sentence.content%> | translation: <%= sentence.english_translation %> </p>
+  <% sentence.words.each do |word| %>
+    <p><%= word.content %></p> 
+    <% word.definitions.each do |definition| %>
+      <p> <%= definition.definition %> </p>
+    <% end %>
+  <% end %>
 <% end %>
 
 <%= form_with(url: "/books/process_text", data: {turnbo: false }) do %>
