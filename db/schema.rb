@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_04_06_142025) do
+ActiveRecord::Schema[7.0].define(version: 2024_04_07_234100) do
   create_table "books", force: :cascade do |t|
     t.string "title"
     t.string "author"
@@ -22,7 +22,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_06_142025) do
 
   create_table "definitions", force: :cascade do |t|
     t.integer "word_id"
-    t.string "definition"
+    t.string "content"
     t.string "dict_pos"
     t.integer "language_id"
     t.string "nlp_upos"

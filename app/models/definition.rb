@@ -3,7 +3,7 @@
 # Table name: definitions
 #
 #  id          :integer          not null, primary key
-#  definition  :string
+#  content     :string
 #  dict_pos    :string
 #  nlp_upos    :string
 #  created_at  :datetime         not null

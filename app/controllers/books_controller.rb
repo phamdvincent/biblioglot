@@ -156,7 +156,7 @@ class BooksController < ApplicationController
         definition_text = "Definition not found"
       end
 
-      definition = Definition.new({ word_id: word_in_db_id, definition: definition_text, dict_pos: dict_pos, language_id: @book.language_id, nlp_upos: nlp_upos })
+      definition = Definition.new({ word_id: word_in_db_id, content: definition_text, dict_pos: dict_pos, language_id: @book.language_id, nlp_upos: nlp_upos })
       definition.save
     end
   end
