@@ -12,7 +12,7 @@
   <% end %>
 <% end %>
 
-<%= form_with(url: "/books/process_text", data: {turnbo: false }) do %>
+<%= form_with(url: "/books/process_text", data: {turbo: false }) do %>
   <%= hidden_field_tag 'user_id', current_user.id %>
   <%= hidden_field_tag 'book_id', @book.id %>
 

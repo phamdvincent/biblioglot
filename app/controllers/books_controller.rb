@@ -86,7 +86,7 @@ class BooksController < ApplicationController
 
     save_story_to_db(language, @book.id, @processed_story)
 
-    redirect_to "/books/#{@book.id}/show"
+    redirect_to "/books/#{@book.id}"
     # puts @book.sentences
   end
 
@@ -123,7 +123,8 @@ class BooksController < ApplicationController
   end
 
   def save_words(language, sentence_id, tokens, word_audio_timestamps)
-    tokens.each_with_index do |token, word_index_in_sentence|
+    word_index_in_sentence = 0
+    tokens.each do |token|
       if token["upos"] != "PUNCT"
         word_text = token["text"].downcase
 
@@ -141,6 +142,7 @@ class BooksController < ApplicationController
 
         word_sentence_link = WordSentenceLink.new({ sentence_id: sentence_id, word_id: word_in_db.id, language_id: @book.language.id, book_id: @book.id, index_in_sentence: word_index_in_sentence, word_audio_timestamp: word_audio_timestamps[word_index_in_sentence]["time"] })
         word_sentence_link.save
+        word_index_in_sentence += 1
       end
     end
   end
