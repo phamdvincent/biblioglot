@@ -1,15 +1,28 @@
 <p style="color: green"><%= notice %></p>
 
+<div class="center">
+dfdfndkjffjk
+fdkjfdl</div>
 <%= render @book %>
 
 <% @book.sentences.each do |sentence| %>
-  <p> <%= sentence.id %>: <%= sentence.content%> | translation: <%= sentence.english_translation %> </p>
-  <% sentence.words.each do |word| %>
-    <p><%= word.content %></p> 
-    <% word.definitions.each do |definition| %>
-      <p> <%= definition.content %> </p>
+  <p class="clickableElement sentence" id=<%= sentence.id %>> <%= sentence.content%> </p>
+
+  <div class="bubble" id="sentence-<%= sentence.id %>" style="display: none">
+    <p> <%= sentence.content %> </p>
+    <p> Translation: <%= sentence.english_translation %> </p>
+    <% sentence.words.each do |word| %>
+      <p class="clickableElement word" id=<%= word.id %>><%= word.content %></p>
+      <div class="bubble" id="sentence-<%= sentence.id %>-word-<%= word.id %>" style="display: none">
+
+        <% word.definitions.each do |definition| %>
+          <p> <%= definition.content %> </p>
+        <% end %>
+      </div>
     <% end %>
-  <% end %>
+
+  </div>
+
 <% end %>
 
 <%= form_with(url: "/books/process_text", data: {turbo: false }) do %>
