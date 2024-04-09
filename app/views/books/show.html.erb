@@ -1,44 +1,50 @@
 <p style="color: green"><%= notice %></p>
 
-<div class="center">
+<!--<div class="center">
 dfdfndkjffjk
-fdkjfdl</div>
+fdkjfdl</div>-->
 <%= render @book %>
 
-<% @book.sentences.each do |sentence| %>
-  <p class="clickableElement sentence" id=<%= sentence.id %>> <%= sentence.content%> </p>
+<div class="centered">
+  <% @book.sentences.each do |sentence| %>
+    <span class="clickableElement sentence" id=<%= sentence.id %>> <%= sentence.content%> </span>
+      <br>
+      <br>
 
-  <div class="bubble" id="sentence-<%= sentence.id %>" style="display: none">
-    <p> <%= sentence.content %> </p>
-    <p> Translation: <%= sentence.english_translation %> </p>
-    <% sentence.words.each do |word| %>
-      <p class="clickableElement word" id=<%= word.id %>><%= word.content %></p>
-      <div class="bubble" id="sentence-<%= sentence.id %>-word-<%= word.id %>" style="display: none">
+      <div class="bubble center" id="sentence-<%= sentence.id %>" style="display: none">
 
-        <% word.definitions.each do |definition| %>
-          <p> <%= definition.content %> </p>
-        <% end %>
+        <% sentence.words.each do |word| %>
+          <span class="clickableElement word" id=<%= word.id %>><%= word.content %></span>
+            <div class="bubble word_bubble" id="sentence-<%= sentence.id %>-word-<%= word.id %>" style="display: none">
+
+              <% word.definitions.each do |definition| %>
+                <p> <%= definition.content %> </p>
+              <% end %>
+            </div>
+          <% end %>
+          <p> <%= sentence.content %> </p>
+          <p> Translation: <%= sentence.english_translation %> </p>
+
       </div>
+
+      <% end %>
+</div>
+    
+
+    <%= form_with(url: "/books/process_text", data: {turbo: false }) do %>
+      <%= hidden_field_tag 'user_id', current_user.id %>
+      <%= hidden_field_tag 'book_id', @book.id %>
+
+      <%= label_tag :story_text, "Enter #{@book.language.english_name.capitalize} Text:" %>
+      <%#= text_area_tag :story_text %>
+      <br>
+      <%= text_area_tag :story_text, '', rows: 4, cols: 40 %>
+      <%= submit_tag "Process" %>
     <% end %>
 
-  </div>
+    <div>
+      <%= link_to "Edit this book", edit_book_path(@book) %> |
+      <%= link_to "Back to books", books_path %>
 
-<% end %>
-
-<%= form_with(url: "/books/process_text", data: {turbo: false }) do %>
-  <%= hidden_field_tag 'user_id', current_user.id %>
-  <%= hidden_field_tag 'book_id', @book.id %>
-
-  <%= label_tag :story_text, "Enter #{@book.language.english_name.capitalize} Text:" %>
-  <%#= text_area_tag :story_text %>
-  <br>
-  <%= text_area_tag :story_text, '', rows: 4, cols: 40 %>
-  <%= submit_tag "Process" %>
-<% end %>
-
-<div>
-  <%= link_to "Edit this book", edit_book_path(@book) %> |
-  <%= link_to "Back to books", books_path %>
-
-  <%= button_to "Destroy this book", @book, method: :delete %>
-</div>
+      <%= button_to "Destroy this book", @book, method: :delete %>
+    </div>

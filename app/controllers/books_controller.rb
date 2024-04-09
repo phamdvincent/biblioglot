@@ -124,8 +124,14 @@ class BooksController < ApplicationController
 
   def save_words(language, sentence_id, tokens, word_audio_timestamps)
     word_index_in_sentence = 0
+    do_not_do_tokens = []
     tokens.each do |token|
-      if token["upos"] != "PUNCT"
+      if token["upos"] != "PUNCT" && !do_not_do_tokens.include?(token["id"])
+        if token["id"].kind_of?(Array)
+          token["id"].each do |id|
+            do_not_do_tokens.append(id)
+          end
+        end
         word_text = token["text"].downcase
 
         word_in_db = Word.find_by(content: word_text)

@@ -16,14 +16,15 @@
 
 body {
   background-color: cyan;
-}
-
-p {
   font-size: 30px;
 }
 
 .clickableElement {
   cursor: pointer;
+}
+
+.clickableElement:hover{
+  background-color: yellow;
 }
 
 .bubble {
@@ -48,10 +49,21 @@ p {
   transform: translate(-50%, -50%);
 }
 
-.sentence {
-
+.centered {
+  position: relative;
+  text-align: center;
+  /* top: 50%; */
+  /* left: 50%; */
+  /* transform: translate(-50%, -50%); */
 }
 
-.word {
-  
+.word_bubble {
+  display: none;
+  position: absolute;
+  /* background-color: #f9f9f9; */
+  background-color: whitesmoke;
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }

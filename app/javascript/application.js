@@ -19,6 +19,13 @@ document.addEventListener('click', function (event) {
   // if (event.target !== bubble && !bubble.contains(event.target)) {
   //   bubble.style.display = 'none';
   // }
+  if (!event.target.classList.contains("bubble") && !event.target.classList.contains("word")) {
+    let bubbles = document.getElementsByClassName("bubble")
+    for (const item of bubbles){
+      item.style.display = "none"
+    }
+    // bubble.style.display = 'none';
+  }
 
   let sentence_bubble_id = ""
   let word_bubble_id = ""
