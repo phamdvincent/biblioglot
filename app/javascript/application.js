@@ -19,13 +19,19 @@ document.addEventListener('click', function (event) {
   // if (event.target !== bubble && !bubble.contains(event.target)) {
   //   bubble.style.display = 'none';
   // }
-  if (!event.target.classList.contains("bubble") && !event.target.classList.contains("word")) {
-    let bubbles = document.getElementsByClassName("bubble")
-    for (const item of bubbles){
-      item.style.display = "none"
-    }
-    // bubble.style.display = 'none';
-  }
+
+  // let bubbles_group = document.getElementsByClassName("bubble")
+  // for (const item of bubbles_group){
+  //   item.style.display = "none"
+  // }
+
+  // if (!event.target.classList.contains("bubble") && !event.target.classList.contains("word")) {
+  //   let bubbles = document.getElementsByClassName("bubble")
+  //   for (const item of bubbles){
+  //     item.style.display = "none"
+  //   }
+  //   // bubble.style.display = 'none';
+  // }
 
   let sentence_bubble_id = ""
   let word_bubble_id = ""
@@ -40,7 +46,13 @@ document.addEventListener('click', function (event) {
   }
 
   if (event.target.classList.contains("clickableElement") && event.target.classList.contains("word")) {
+
     word_bubble_id = event.target.parentNode.id + "-" + 'word-' + event.target.getAttribute('id')
+    let word_bubble_group = document.getElementsByClassName("word_bubble")
+    for (const item of word_bubble_group) {
+      if (item.id != word_bubble_id)
+        item.style.display = 'none'
+    }
     console.log(word_bubble_id)
     let word_bubble = document.getElementById(word_bubble_id);
     if (word_bubble.style.display == 'none')
