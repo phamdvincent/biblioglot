@@ -8,47 +8,50 @@ fdkjfdl</div>-->
 <div class="centered">
   <% @book.sentences.each do |sentence| %>
     <span class="clickableElement sentence" id="index-<%= sentence.index_in_book %>"> <%= sentence.content%> </span>
-      <br>
-      <br>
+    <br>
+    <br>
 
-      <div class="bubble center sentence_bubble" id="index-<%= sentence.index_in_book %>-sentence" style="display: none">
+    <div class="bubble center sentence_bubble" id="index-<%= sentence.index_in_book %>-sentence" style="display: none">
 
-        <% sentence.words.each_with_index do |word, word_index_in_sentence| %>
-          <span class="clickableElement word index-<%= sentence.index_in_book %>-sentence-word" id=<%= word.id %> timestamp= <%= word.word_sentence_links.find_by(word_id: word.id, sentence_id: sentence.id, index_in_sentence: word_index_in_sentence).word_audio_timestamp %>><%= word.content %></span>
-            <div class="bubble word_bubble" id="index-<%= sentence.index_in_book %>-sentence-word-<%= word.id %>" style="display: none">
-              <div> <strong><%= word.content %></strong>  </div>
-              <% word.definitions.each do |definition| %>
-                <div> <em><%= definition.dict_pos %></em> <%= definition.content %>  </div>
-              <% end %>
-              <audio controls src="https://biblioglot.s3.us-east-2.amazonaws.com/<%= word.audio %>" type="audio/mp3">
-                Your browser
-              </audio>
-            </div>
-          <% end %>
-          <p> <%= sentence.content %> </p>
-          <p> Translation: <%= sentence.english_translation %> </p>
+      <% sentence.words.each_with_index do |word, word_index_in_sentence| %>
+        <span class="clickableElement word index-<%= sentence.index_in_book %>-sentence-word" id=<%= word.id %> timestamp= <%= word.word_sentence_links.find_by(word_id: word.id, sentence_id: sentence.id, index_in_sentence: word_index_in_sentence).word_audio_timestamp %>><%= word.content %></span>
+          <div class="bubble word_bubble" id="index-<%= sentence.index_in_book %>-sentence-word-<%= word.id %>" style="display: none">
+            <div> <strong><%= word.content %></strong>  </div>
+            <% word.definitions.each do |definition| %>
+              <div> <em><%= definition.dict_pos %></em> <%= definition.content %>  </div>
+            <% end %>
+            <audio controls src="https://biblioglot.s3.us-east-2.amazonaws.com/<%= word.audio %>" type="audio/mp3">
+              Your browser
+            </audio>
+          </div>
+        <% end %>
+        <!--<p> <%#= sentence.content %> </p>-->
+        <p> Translation: <%= sentence.english_translation %> </p>
+        <div>
           <audio class="audio_sentence" id="audio-index-<%= sentence.index_in_book %>-sentence" controls src="https://biblioglot.s3.us-east-2.amazonaws.com/<%= sentence.audio %>" type="audio/mp3">
             Your browser
           </audio>
         </div>
 
-      <% end %>
-    </div>
+      </div>
 
-    <%= form_with(url: "/books/process_text", data: {turbo: false }) do %>
-      <%= hidden_field_tag 'user_id', current_user.id %>
-      <%= hidden_field_tag 'book_id', @book.id %>
-
-      <%= label_tag :story_text, "Enter #{@book.language.english_name.capitalize} Text:" %>
-      <%#= text_area_tag :story_text %>
-      <br>
-      <%= text_area_tag :story_text, '', rows: 4, cols: 40 %>
-      <%= submit_tag "Process" %>
     <% end %>
+  </div>
 
-    <div>
-      <%= link_to "Edit this book", edit_book_path(@book) %> |
-      <%= link_to "Back to books", books_path %>
+  <%= form_with(url: "/books/process_text", data: {turbo: false }) do %>
+    <%= hidden_field_tag 'user_id', current_user.id %>
+    <%= hidden_field_tag 'book_id', @book.id %>
 
-      <%= button_to "Destroy this book", @book, method: :delete %>
-    </div>
+    <%= label_tag :story_text, "Enter #{@book.language.english_name.capitalize} Text:" %>
+    <%#= text_area_tag :story_text %>
+    <br>
+    <%= text_area_tag :story_text, '', rows: 4, cols: 40 %>
+    <%= submit_tag "Process" %>
+  <% end %>
+
+  <div>
+    <%= link_to "Edit this book", edit_book_path(@book) %> |
+    <%= link_to "Back to books", books_path %>
+
+    <%= button_to "Destroy this book", @book, method: :delete %>
+  </div>

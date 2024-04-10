@@ -54,20 +54,25 @@ document.addEventListener('click', function (event) {
     console.log(audio_id)
     const audio = document.getElementById(audio_id)
 
+    let startTime;
     audio.addEventListener('play', function (event) {
       console.log('Audio is playing!');
       console.log('Event target:', event.target);
-
+      startTime = performance.now()
     });
 
     audio.addEventListener('timeupdate', function (event) {
-      let currentTime = audio.currentTime * 1000
+      let currentTime = performance.now() - startTime // audio.currentTime * 1000
+
+      console.log(currentTime)
       let word_bubbles = document.getElementsByClassName(sentence_bubble_id + '-word')
       for (const item of word_bubbles) {
         if (currentTime >= parseInt(item.getAttribute("timestamp")) )
-        item.style.backgroundColor = "red"
+        item.style.color= "red"
       }
-    })
+
+
+    });
 
     audio.addEventListener('pause', function (event) {
       console.log('Audio is paused!');
@@ -76,7 +81,7 @@ document.addEventListener('click', function (event) {
       let word_bubbles = document.getElementsByClassName(sentence_bubble_id + '-word')
       for (const item of word_bubbles) {
         if (currentTime >= parseInt(item.getAttribute("timestamp")) )
-        item.style.backgroundColor = "white"
+        item.style.color = ""
       }
     });
   }
