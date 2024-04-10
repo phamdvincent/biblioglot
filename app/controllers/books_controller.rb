@@ -107,7 +107,12 @@ class BooksController < ApplicationController
   end
 
   def save_sentences(language, book_id, processed_story)
-    processed_story.each_with_index do |item, sentence_index_in_story|
+    if @book.sentences.empty?
+      sentence_index_in_book = 0
+    else
+      sentence_index_in_book = Sentence.maximum(:index_in_book) + 1
+    end
+    processed_story.each do |item|
       sentence_text = item["sentence"]
       translation = TranslationService.get_translation(language, sentence_text)
 
@@ -115,9 +120,9 @@ class BooksController < ApplicationController
       audio_object_key = StorageService.save_to_storage(audio_sentence, SecureRandom.uuid, "sentence")
       word_audio_timestamps = AudioService.generate_audio_data(language, sentence_text, "timestamp")
 
-      sentence = Sentence.new(book_id: book_id, content: sentence_text, language_id: @book.language_id, audio: audio_object_key, english_translation: translation, index_in_book: sentence_index_in_story)
+      sentence = Sentence.new(book_id: book_id, content: sentence_text, language_id: @book.language_id, audio: audio_object_key, english_translation: translation, index_in_book: sentence_index_in_book)
       sentence.save
-
+      sentence_index_in_book += 1
       save_words(language, sentence.id, item["tokens"], word_audio_timestamps)
     end
   end

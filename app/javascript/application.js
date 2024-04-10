@@ -32,22 +32,59 @@ document.addEventListener('click', function (event) {
   //   }
   //   // bubble.style.display = 'none';
   // }
-
+  console.log(event.target)
   let sentence_bubble_id = ""
   let word_bubble_id = ""
 
   if (event.target.classList.contains("clickableElement") && event.target.classList.contains("sentence")) {
-    sentence_bubble_id = 'sentence-' + event.target.getAttribute('id')
+    sentence_bubble_id = event.target.id + '-' + 'sentence'
+    console.log(sentence_bubble_id)
+    let sentence_bubble_group = document.getElementsByClassName("sentence_bubble")
+    for (const item of sentence_bubble_group) {
+      if (item.id != sentence_bubble_id)
+        item.style.display = 'none'
+    }
     let sentence_bubble = document.getElementById(sentence_bubble_id);
     if (sentence_bubble.style.display == 'none')
       sentence_bubble.style.display = 'block'
     else
       sentence_bubble.style.display = 'none'
+
+    let audio_id = "audio-" + event.target.id + "-sentence"
+    console.log(audio_id)
+    const audio = document.getElementById(audio_id)
+
+    audio.addEventListener('play', function (event) {
+      console.log('Audio is playing!');
+      console.log('Event target:', event.target);
+
+    });
+
+    audio.addEventListener('timeupdate', function (event) {
+      let currentTime = audio.currentTime * 1000
+      let word_bubbles = document.getElementsByClassName(sentence_bubble_id + '-word')
+      for (const item of word_bubbles) {
+        if (currentTime >= parseInt(item.getAttribute("timestamp")) )
+        item.style.backgroundColor = "red"
+      }
+    })
+
+    audio.addEventListener('pause', function (event) {
+      console.log('Audio is paused!');
+      console.log('Event target:', event.target);
+      let currentTime = audio.currentTime * 1000
+      let word_bubbles = document.getElementsByClassName(sentence_bubble_id + '-word')
+      for (const item of word_bubbles) {
+        if (currentTime >= parseInt(item.getAttribute("timestamp")) )
+        item.style.backgroundColor = "white"
+      }
+    });
   }
 
   if (event.target.classList.contains("clickableElement") && event.target.classList.contains("word")) {
 
     word_bubble_id = event.target.parentNode.id + "-" + 'word-' + event.target.getAttribute('id')
+    console.log(word_bubble_id)
     let word_bubble_group = document.getElementsByClassName("word_bubble")
     for (const item of word_bubble_group) {
       if (item.id != word_bubble_id)
@@ -60,4 +97,28 @@ document.addEventListener('click', function (event) {
     else
       word_bubble.style.display = 'none'
   }
+
+  if (event.target.classList.contains("audio_sentence")) {
+    let audio_player_id = "audio-" + event.target.parentNode.id
+    let audio_player = document.getElementById(audio_player_id)
+    let playbackData = []
+
+    audio_player.addEventListener('timeupdate', function () {
+      var currentTimeMs = audio_player.currentTime * 1000;
+      console.log(currentTimeMs);
+    }, false);
+  }
+
+
+  // const audioElement = document.getElementById('audio-sentence-83');
+
+  // audioElement.addEventListener('play', function (event) {
+  //   console.log('Audio is playing!');
+  //   console.log('Event target:', event.target);
+  // });
+
+  // audioElement.addEventListener('pause', function (event) {
+  //   console.log('Audio is paused!');
+  //   console.log('Event target:', event.target);
+  // });
 });
