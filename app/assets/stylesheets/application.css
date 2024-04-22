@@ -15,7 +15,6 @@
  */
 
 body {
-  background-color: cyan;
   font-size: 30px;
 }
 
@@ -29,7 +28,7 @@ body {
 
 .bubble {
   display: none;
-  position: absolute;
+  /* position: absolute; */
   /* background-color: #f9f9f9; */
   background-color: red;
   border: 1px solid #ccc;
@@ -39,8 +38,8 @@ body {
 }
 
 .center {
-  width: 1500px; /* Adjust size as needed */
-  height: 600px; /* Adjust size as needed */
+  /* width: 1500px; Adjust size as needed */
+  /* height: 100px; Adjust size as needed */
   background-color: whitesmoke; /* Adjust color as needed */
   border-radius: 10px;
   position: absolute;
@@ -49,21 +48,48 @@ body {
   transform: translate(-50%, -50%);
 }
 
-.centered {
-  position: relative;
-  /* text-align: center; */
+.sentence_bubble {
+    /* width: 1500px; Adjust size as needed */
+  /* height: 100px; Adjust size as needed */
+  background-color: whitesmoke; /* Adjust color as needed */
+  border-radius: 10px;
+  position: absolute;
   /* top: 50%; */
-  /* left: 50%; */
-  /* transform: translate(-50%, -50%); */
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .word_bubble {
   display: none;
   position: absolute;
   /* background-color: #f9f9f9; */
-  background-color: whitesmoke;
+  background-color: lightgrey;
   border: 1px solid #ccc;
   padding: 10px;
   border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 2;
+  margin-top: 10px;
+}
+
+.audio_sentence {
+ /* padding-top: 10rem; */
+  z-index: 1;
+}
+
+.audio_word {
+  padding-top: 2rem;
+  background-color: lightgrey;
+}
+
+.story {
+  margin: auto;
+  width: 60%;
+  /* border: 3px solid green; */
+  padding: 10px;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 100px;
 }
