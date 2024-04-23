@@ -143,7 +143,7 @@ class BooksController < ApplicationController
           word.populate_word(language, token, word_index_in_sentence, @book)
           word.save
           word_in_db = word
-          # save_definitions(language, word_in_db.id, token)
+          save_definitions(language, word_in_db, token)
         end
 
         word_sentence_link = WordSentenceLink.new
@@ -154,19 +154,12 @@ class BooksController < ApplicationController
     end
   end
 
-  def save_definitions(language, word_in_db_id, token)
-    nlp_upos = token["upos"]
-    word_json_list = DictionaryService.get_word_json_list(language, token["text"].downcase)
-    word_json_list.each do |item|
-      dict_pos = item["pos"]
-      if item["senses"].at(0).key?("glosses")
-        definition_text = item["senses"].at(0)["glosses"]
-      else
-        definition_text = "Definition not found"
-      end
-
-      definition = Definition.new({ word_id: word_in_db_id, content: definition_text, dict_pos: dict_pos, language_id: @book.language_id, nlp_upos: nlp_upos })
-      definition.save
+  def save_definitions(language, word_in_db, token)
+    dictionary_definitions = word_in_db.get_word_dictionary_data(language, token)
+    dictionary_definitions.each do |definition|
+      definition_object = Definition.new
+      definition_object.populate_definition(language, word_in_db, token, @book, definition)
+      definition_object.save
     end
   end
 end
