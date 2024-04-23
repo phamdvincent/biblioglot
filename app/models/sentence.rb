@@ -47,7 +47,7 @@ class Sentence < ApplicationRecord
 
   def get_audio_timestamps(language, sentence_text)
     audio_timestamps_for_words = AudioService.generate_audio_data(language, sentence_text, "timestamp")
-    return
+    return audio_timestamps_for_words
   end
 
   private

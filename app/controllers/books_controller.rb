@@ -120,11 +120,11 @@ class BooksController < ApplicationController
       word_audio_timestamps = sentence_object.get_audio_timestamps(language, item["sentence"])
 
       sentence_index_in_book += 1
-      save_words(language, sentence_object.id, item["tokens"], word_audio_timestamps)
+      save_words(language, sentence_object, item["tokens"], word_audio_timestamps)
     end
   end
 
-  def save_words(language, sentence_id, tokens, word_audio_timestamps)
+  def save_words(language, sentence_object, tokens, word_audio_timestamps)
     word_index_in_sentence = 0
     do_not_do_tokens = []
     tokens.each do |token|
@@ -146,8 +146,9 @@ class BooksController < ApplicationController
           # save_definitions(language, word_in_db.id, token)
         end
 
-        # word_sentence_link = WordSentenceLink.new({ sentence_id: sentence_id, word_id: word_in_db.id, language_id: @book.language.id, book_id: @book.id, index_in_sentence: word_index_in_sentence, word_audio_timestamp: word_audio_timestamps[word_index_in_sentence]["time"] })
-        # word_sentence_link.save
+        word_sentence_link = WordSentenceLink.new
+        word_sentence_link.populate_word_sentence_link(@book, sentence_object, word_in_db, word_index_in_sentence, word_audio_timestamps)
+        word_sentence_link.save
         word_index_in_sentence += 1
       end
     end
