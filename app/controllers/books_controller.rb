@@ -113,17 +113,14 @@ class BooksController < ApplicationController
       sentence_index_in_book = Sentence.maximum(:index_in_book) + 1
     end
     processed_story.each do |item|
-      sentence_text = item["sentence"]
-      translation = TranslationService.get_translation(language, sentence_text)
+      sentence_object = Sentence.new
+      sentence_object.populate_sentence(language, item, sentence_index_in_book, @book)
+      sentence_object.save
 
-      audio_sentence = AudioService.generate_audio_data(language, sentence_text, "audio")
-      audio_object_key = StorageService.save_to_storage(audio_sentence, SecureRandom.uuid, "sentence")
-      word_audio_timestamps = AudioService.generate_audio_data(language, sentence_text, "timestamp")
+      word_audio_timestamps = sentence_object.get_audio_timestamps(language, item["sentence"])
 
-      sentence = Sentence.new(book_id: book_id, content: sentence_text, language_id: @book.language_id, audio: audio_object_key, english_translation: translation, index_in_book: sentence_index_in_book)
-      sentence.save
       sentence_index_in_book += 1
-      save_words(language, sentence.id, item["tokens"], word_audio_timestamps)
+      save_words(language, sentence_object.id, item["tokens"], word_audio_timestamps)
     end
   end
 
@@ -141,18 +138,16 @@ class BooksController < ApplicationController
 
         word_in_db = Word.find_by(content: word_text)
 
-        audio_word = AudioService.generate_audio_data(language, word_text, "audio")
-        audio_object_key = StorageService.save_to_storage(audio_word, SecureRandom.uuid, "word")
-
         if !word_in_db
-          word = Word.new({ content: word_text, audio: audio_object_key, language_id: @book.language_id })
+          word = Word.new
+          word.populate_word(language, token, word_index_in_sentence, @book)
           word.save
           word_in_db = word
-          save_definitions(language, word_in_db.id, token)
+          # save_definitions(language, word_in_db.id, token)
         end
 
-        word_sentence_link = WordSentenceLink.new({ sentence_id: sentence_id, word_id: word_in_db.id, language_id: @book.language.id, book_id: @book.id, index_in_sentence: word_index_in_sentence, word_audio_timestamp: word_audio_timestamps[word_index_in_sentence]["time"] })
-        word_sentence_link.save
+        # word_sentence_link = WordSentenceLink.new({ sentence_id: sentence_id, word_id: word_in_db.id, language_id: @book.language.id, book_id: @book.id, index_in_sentence: word_index_in_sentence, word_audio_timestamp: word_audio_timestamps[word_index_in_sentence]["time"] })
+        # word_sentence_link.save
         word_index_in_sentence += 1
       end
     end
