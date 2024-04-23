@@ -87,7 +87,6 @@ class BooksController < ApplicationController
     save_story_to_db(language, @book.id, @processed_story)
 
     redirect_to "/books/#{@book.id}"
-    # puts @book.sentences
   end
 
   private

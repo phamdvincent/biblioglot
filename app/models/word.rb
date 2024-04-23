@@ -29,8 +29,7 @@ class Word < ApplicationRecord
   def populate_word(language, params, word_index_in_sentence, book)
     word_text = params["text"].downcase
     self.content = word_text
-    # self.audio = get_audio_storage_path(language, word_text)
-    self.audio = "audio_path"
+    self.audio = get_audio_storage_path(language, word_text)
     self.language_id = book.language_id
   end
 

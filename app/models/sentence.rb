@@ -38,8 +38,8 @@ class Sentence < ApplicationRecord
   def populate_sentence(language, params, sentence_index_in_book, book)
     sentence_text = params["sentence"]
     self.content = sentence_text
-    # self.audio = get_audio_storage_path(language, sentence_text)
-    # self.english_translation = get_translation(language, sentence_text)
+    self.audio = get_audio_storage_path(language, sentence_text)
+    self.english_translation = get_translation(language, sentence_text)
     self.index_in_book = sentence_index_in_book
     self.book_id = book.id
     self.language_id = book.language_id
