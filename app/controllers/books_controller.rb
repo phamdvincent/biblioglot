@@ -87,7 +87,6 @@ class BooksController < ApplicationController
     save_story_to_db(language, @book.id, @processed_story)
 
     redirect_to "/books/#{@book.id}"
-    # puts @book.sentences
   end
 
   private
@@ -113,21 +112,18 @@ class BooksController < ApplicationController
       sentence_index_in_book = Sentence.maximum(:index_in_book) + 1
     end
     processed_story.each do |item|
-      sentence_text = item["sentence"]
-      translation = TranslationService.get_translation(language, sentence_text)
+      sentence_object = Sentence.new
+      sentence_object.populate_sentence(language, item, sentence_index_in_book, @book)
+      sentence_object.save
 
-      audio_sentence = AudioService.generate_audio_data(language, sentence_text, "audio")
-      audio_object_key = StorageService.save_to_storage(audio_sentence, SecureRandom.uuid, "sentence")
-      word_audio_timestamps = AudioService.generate_audio_data(language, sentence_text, "timestamp")
+      word_audio_timestamps = sentence_object.get_audio_timestamps(language, item["sentence"])
 
-      sentence = Sentence.new(book_id: book_id, content: sentence_text, language_id: @book.language_id, audio: audio_object_key, english_translation: translation, index_in_book: sentence_index_in_book)
-      sentence.save
       sentence_index_in_book += 1
-      save_words(language, sentence.id, item["tokens"], word_audio_timestamps)
+      save_words(language, sentence_object, item["tokens"], word_audio_timestamps)
     end
   end
 
-  def save_words(language, sentence_id, tokens, word_audio_timestamps)
+  def save_words(language, sentence_object, tokens, word_audio_timestamps)
     word_index_in_sentence = 0
     do_not_do_tokens = []
     tokens.each do |token|
@@ -141,36 +137,28 @@ class BooksController < ApplicationController
 
         word_in_db = Word.find_by(content: word_text)
 
-        audio_word = AudioService.generate_audio_data(language, word_text, "audio")
-        audio_object_key = StorageService.save_to_storage(audio_word, SecureRandom.uuid, "word")
-
         if !word_in_db
-          word = Word.new({ content: word_text, audio: audio_object_key, language_id: @book.language_id })
+          word = Word.new
+          word.populate_word(language, token, word_index_in_sentence, @book)
           word.save
           word_in_db = word
-          save_definitions(language, word_in_db.id, token)
+          save_definitions(language, word_in_db, token)
         end
 
-        word_sentence_link = WordSentenceLink.new({ sentence_id: sentence_id, word_id: word_in_db.id, language_id: @book.language.id, book_id: @book.id, index_in_sentence: word_index_in_sentence, word_audio_timestamp: word_audio_timestamps[word_index_in_sentence]["time"] })
+        word_sentence_link = WordSentenceLink.new
+        word_sentence_link.populate_word_sentence_link(@book, sentence_object, word_in_db, word_index_in_sentence, word_audio_timestamps)
         word_sentence_link.save
         word_index_in_sentence += 1
       end
     end
   end
 
-  def save_definitions(language, word_in_db_id, token)
-    nlp_upos = token["upos"]
-    word_json_list = DictionaryService.get_word_json_list(language, token["text"].downcase)
-    word_json_list.each do |item|
-      dict_pos = item["pos"]
-      if item["senses"].at(0).key?("glosses")
-        definition_text = item["senses"].at(0)["glosses"]
-      else
-        definition_text = "Definition not found"
-      end
-
-      definition = Definition.new({ word_id: word_in_db_id, content: definition_text, dict_pos: dict_pos, language_id: @book.language_id, nlp_upos: nlp_upos })
-      definition.save
+  def save_definitions(language, word_in_db, token)
+    dictionary_definitions = word_in_db.get_word_dictionary_data(language, token)
+    dictionary_definitions.each do |definition|
+      definition_object = Definition.new
+      definition_object.populate_definition(language, word_in_db, token, @book, definition)
+      definition_object.save
     end
   end
 end

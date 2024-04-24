@@ -32,13 +32,13 @@ document.addEventListener('click', function (event) {
   //   }
   //   // bubble.style.display = 'none';
   // }
-  console.log(event.target)
+  // console.log(event.target)
   let sentence_bubble_id = ""
   let word_bubble_id = ""
 
   if (event.target.classList.contains("clickableElement") && event.target.classList.contains("sentence")) {
     sentence_bubble_id = event.target.id + '-' + 'sentence'
-    console.log(sentence_bubble_id)
+    // console.log(sentence_bubble_id)
     let sentence_bubble_group = document.getElementsByClassName("sentence_bubble")
     for (const item of sentence_bubble_group) {
       if (item.id != sentence_bubble_id)
@@ -51,20 +51,19 @@ document.addEventListener('click', function (event) {
       sentence_bubble.style.display = 'none'
 
     let audio_id = "audio-" + event.target.id + "-sentence"
-    console.log(audio_id)
+    // console.log(audio_id)
     const audio = document.getElementById(audio_id)
 
     let startTime;
     audio.addEventListener('play', function (event) {
-      console.log('Audio is playing!');
-      console.log('Event target:', event.target);
-      startTime = performance.now()
+      // console.log('Audio is playing!');
+      // console.log('Event target:', event.target);
+      //startTime = performance.now()
     });
 
     audio.addEventListener('timeupdate', function (event) {
-      let currentTime = performance.now() - startTime // audio.currentTime * 1000
+      let currentTime = audio.currentTime * 1000 //  performance.now() - startTime
 
-      console.log(currentTime)
       let word_bubbles = document.getElementsByClassName(sentence_bubble_id + '-word')
       for (const item of word_bubbles) {
         if (currentTime >= parseInt(item.getAttribute("timestamp")) )
@@ -75,27 +74,38 @@ document.addEventListener('click', function (event) {
     });
 
     audio.addEventListener('pause', function (event) {
-      console.log('Audio is paused!');
-      console.log('Event target:', event.target);
+      // console.log('Audio is paused!');
+      // console.log('Event target:', event.target);
+      let currentTime = audio.currentTime * 1000
+      let word_bubbles = document.getElementsByClassName(sentence_bubble_id + '-word')
+      // for (const item of word_bubbles) {
+      //   if (currentTime >= parseInt(item.getAttribute("timestamp")) )
+      //   item.style.color = ""
+      // }
+    });
+
+    audio.addEventListener('ended', function (event) {
+      // console.log('Audio is paused!');
+      // console.log('Event target:', event.target);
       let currentTime = audio.currentTime * 1000
       let word_bubbles = document.getElementsByClassName(sentence_bubble_id + '-word')
       for (const item of word_bubbles) {
-        if (currentTime >= parseInt(item.getAttribute("timestamp")) )
         item.style.color = ""
       }
     });
+
   }
 
   if (event.target.classList.contains("clickableElement") && event.target.classList.contains("word")) {
 
     word_bubble_id = event.target.parentNode.id + "-" + 'word-' + event.target.getAttribute('id')
-    console.log(word_bubble_id)
+
     let word_bubble_group = document.getElementsByClassName("word_bubble")
     for (const item of word_bubble_group) {
       if (item.id != word_bubble_id)
         item.style.display = 'none'
     }
-    console.log(word_bubble_id)
+
     let word_bubble = document.getElementById(word_bubble_id);
     if (word_bubble.style.display == 'none')
       word_bubble.style.display = 'block'
@@ -103,16 +113,16 @@ document.addEventListener('click', function (event) {
       word_bubble.style.display = 'none'
   }
 
-  if (event.target.classList.contains("audio_sentence")) {
-    let audio_player_id = "audio-" + event.target.parentNode.id
-    let audio_player = document.getElementById(audio_player_id)
-    let playbackData = []
+  // if (event.target.classList.contains("audio_sentence")) {
+  //   let audio_player_id = "audio-" + event.target.parentNode.id
+  //   let audio_player = document.getElementById(audio_player_id)
+  //   let playbackData = []
 
-    audio_player.addEventListener('timeupdate', function () {
-      var currentTimeMs = audio_player.currentTime * 1000;
-      console.log(currentTimeMs);
-    }, false);
-  }
+  //   audio_player.addEventListener('timeupdate', function () {
+  //     var currentTimeMs = audio_player.currentTime * 1000;
+  //     console.log(currentTimeMs);
+  //   }, false);
+  // }
 
 
   // const audioElement = document.getElementById('audio-sentence-83');
