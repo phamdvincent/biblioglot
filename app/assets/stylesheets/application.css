@@ -93,3 +93,7 @@ body {
   text-align: center;
   margin-bottom: 100px;
 }
+
+.card-spacing {
+  margin-bottom: 40px;
+}

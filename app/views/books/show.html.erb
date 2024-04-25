@@ -12,7 +12,8 @@ fdkjfdl</div>-->
     <br>
 
     <div class="bubble sentence_bubble" id="index-<%= sentence.index_in_book %>-sentence" style="display: none">
-      <span><strong>Sentence</strong></span><br><br>
+      <span><strong>Sentence</strong></span><br>
+      <br>
       <% sentence.words.each_with_index do |word, word_index_in_sentence| %>
         <span class="clickableElement word index-<%= sentence.index_in_book %>-sentence-word" id=<%= word.id %> timestamp= <%= word.word_sentence_links.find_by(word_id: word.id, sentence_id: sentence.id, index_in_sentence: word_index_in_sentence).word_audio_timestamp %>><%= word.content %></span>
           <div class="bubble word_bubble" id="index-<%= sentence.index_in_book %>-sentence-word-<%= word.id %>" style="display: none">
@@ -40,20 +41,43 @@ fdkjfdl</div>-->
     <% end %>
   </div>
 
-  <%= form_with(url: "/books/process_text", data: {turbo: false }) do %>
-    <%= hidden_field_tag 'user_id', current_user.id %>
-    <%= hidden_field_tag 'book_id', @book.id %>
+  <div class="header">
+    <%= form_with(url: "/books/process_text", data: {turbo: false }) do %>
+      <%= hidden_field_tag 'user_id', current_user.id %>
+      <%= hidden_field_tag 'book_id', @book.id %>
 
-    <%= label_tag :story_text, "Enter #{@book.language.english_name.capitalize} Text:" %>
-    <%#= text_area_tag :story_text %>
-    <br>
-    <%= text_area_tag :story_text, '', rows: 4, cols: 40 %>
-    <%= submit_tag "Process" %>
-  <% end %>
+      <%#= label_tag :story_text, "Administrator Console""Enter #{@book.language.english_name.capitalize} Text:" %>
+      <%= label_tag :story_text, "Administrator Console" %>
 
-  <div>
-    <%= link_to "Edit this book", edit_book_path(@book) %> |
-    <%= link_to "Back to books", books_path %>
+      <br>
+      <%= text_area_tag :story_text, '', rows: 5, cols: 50 %>
 
-    <%= button_to "Destroy this book", @book, method: :delete %>
+      <%= submit_tag "Process" %>
+    <% end %>
+
+    <div id="accentButtons1">
+      <%= button_tag 'Á', type: 'button', onclick: "insertAccent('Á')" %>
+      <%= button_tag 'É', type: 'button', onclick: "insertAccent('É')" %>
+      <%= button_tag 'Í', type: 'button', onclick: "insertAccent('Í')" %>
+      <%= button_tag 'Ó', type: 'button', onclick: "insertAccent('Ó')" %>
+      <%= button_tag 'Ú', type: 'button', onclick: "insertAccent('Ú')" %>
+      <%= button_tag 'Ñ', type: 'button', onclick: "insertAccent('Ñ')" %>
+      <!-- Add more buttons for other accented characters as needed -->
+    </div>
+    <div id="accentButtons2">
+      <%= button_tag 'á', type: 'button', onclick: "insertAccent('á')" %>
+      <%= button_tag 'é', type: 'button', onclick: "insertAccent('é')" %>
+      <%= button_tag 'í', type: 'button', onclick: "insertAccent('í')" %>
+      <%= button_tag 'ó', type: 'button', onclick: "insertAccent('ó')" %>
+      <%= button_tag 'ú', type: 'button', onclick: "insertAccent('ú')" %>
+      <%= button_tag 'ñ', type: 'button', onclick: "insertAccent('ñ')" %>
+      <!-- Add more buttons for other accented characters as needed -->
+    </div>
+
+    <div>
+      <%= link_to "Edit this book", edit_book_path(@book) %> |
+      <%= link_to "Back to books", books_path %>
+
+      <%= button_to "Destroy this book", @book, method: :delete %>
+    </div>
   </div>

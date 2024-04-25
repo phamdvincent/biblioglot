@@ -1,21 +1,37 @@
 <p style="color: green"><%= notice %></p>
+<h1 class="header">Spanish Books</h1>
 
-<h1>Books</h1>
+<div id="books" class="header">
 
-<div id="books">
   <% @books.each do |book| %>
-    <%= render book %>
-
-    <% if !current_user.books.include?(book) %>
-      <p>
-        <%= link_to "Start this book!", book %>
-      </p>
-    <% else %>
-      <p>
-        <%= link_to "Continue this book!", book %>
-      </p>
-    <% end %>
-
+    <%#= render book %>
+    <!---->
+    <%# if !current_user.books.include?(book) %>
+    <!--      <p>-->
+    <%#= link_to "Start this book!", book %>
+    <!--      </p>-->
+    <%# else %>
+    <!--      <p>-->
+    <%#= link_to "Continue this book!", book %>
+    <!--      </p>-->
+    <%# end %>
+    <!--  <hr>-->
+    <div class="card center card-spacing" style="width: 18rem;">
+      <div class="card-body">
+        <h5 class="card-title"><%= book.title %></h5>
+        <h6 class="card-subtitle mb-2 text-muted"><em>by <%= book.author %>, <%= book.publication_year %></em></h6>
+        <!--<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>-->
+        <% if !current_user.books.include?(book) %>
+          <p>
+            <%= link_to "Start this book!", book %>
+          </p>
+        <% else %>
+          <p>
+            <%= link_to "Continue this book!", book %>
+          </p>
+        <% end %>
+      </div>
+    </div>
   <% end %>
 </div>
 

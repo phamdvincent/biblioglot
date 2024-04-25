@@ -55,39 +55,39 @@ document.addEventListener('click', function (event) {
     const audio = document.getElementById(audio_id)
 
     let startTime;
-    audio.addEventListener('play', function (event) {
-      // console.log('Audio is playing!');
-      // console.log('Event target:', event.target);
-      //startTime = performance.now()
-    });
+    // audio.addEventListener('play', function (event) {
+    //   // console.log('Audio is playing!');
+    //   // console.log('Event target:', event.target);
+    //   //startTime = performance.now()
+    // });
 
     audio.addEventListener('timeupdate', function (event) {
       let currentTime = audio.currentTime * 1000 //  performance.now() - startTime
 
       let word_bubbles = document.getElementsByClassName(sentence_bubble_id + '-word')
       for (const item of word_bubbles) {
-        if (currentTime >= parseInt(item.getAttribute("timestamp")) )
-        item.style.color= "red"
+        if (currentTime >= parseInt(item.getAttribute("timestamp")))
+          item.style.color = "red"
       }
 
 
     });
 
-    audio.addEventListener('pause', function (event) {
-      // console.log('Audio is paused!');
-      // console.log('Event target:', event.target);
-      let currentTime = audio.currentTime * 1000
-      let word_bubbles = document.getElementsByClassName(sentence_bubble_id + '-word')
-      // for (const item of word_bubbles) {
-      //   if (currentTime >= parseInt(item.getAttribute("timestamp")) )
-      //   item.style.color = ""
-      // }
-    });
+    // audio.addEventListener('pause', function (event) {
+    //   // console.log('Audio is paused!');
+    //   // console.log('Event target:', event.target);
+    //   let currentTime = audio.currentTime * 1000
+    //   let word_bubbles = document.getElementsByClassName(sentence_bubble_id + '-word')
+    //   // for (const item of word_bubbles) {
+    //   //   if (currentTime >= parseInt(item.getAttribute("timestamp")) )
+    //   //   item.style.color = ""
+    //   // }
+    // });
 
     audio.addEventListener('ended', function (event) {
       // console.log('Audio is paused!');
       // console.log('Event target:', event.target);
-      let currentTime = audio.currentTime * 1000
+      // let currentTime = audio.currentTime * 1000
       let word_bubbles = document.getElementsByClassName(sentence_bubble_id + '-word')
       for (const item of word_bubbles) {
         item.style.color = ""
@@ -136,4 +136,16 @@ document.addEventListener('click', function (event) {
   //   console.log('Audio is paused!');
   //   console.log('Event target:', event.target);
   // });
+
+
 });
+
+function insertAccent(character) {
+  var inputField = document.getElementById('story_text');
+  var currentPosition = inputField.selectionStart;
+  var textBefore = inputField.value.substring(0, currentPosition);
+  var textAfter = inputField.value.substring(currentPosition);
+  inputField.value = textBefore + character + textAfter;
+  inputField.focus();
+  inputField.setSelectionRange(currentPosition + 1, currentPosition + 1);
+}
