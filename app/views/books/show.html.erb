@@ -23,7 +23,6 @@
             </audio>
           </div>
         <% end %>
-        <!--<p> <%#= sentence.content %> </p>-->
 
         <div>
           <audio class="audio_sentence" id="audio-index-<%= sentence.index_in_book %>-sentence" controls src="https://biblioglot.s3.us-east-2.amazonaws.com/<%= sentence.audio %>" type="audio/mp3">
@@ -43,7 +42,6 @@
       <%= hidden_field_tag 'user_id', current_user.id %>
       <%= hidden_field_tag 'book_id', @book.id %>
 
-      <%#= label_tag :story_text, "Administrator Console""Enter #{@book.language.english_name.capitalize} Text:" %>
       <%= label_tag :story_text, "Administrator Console" %>
 
       <br>
@@ -59,7 +57,6 @@
       <%= button_tag 'Ó', type: 'button', onclick: "insertAccent('Ó')" %>
       <%= button_tag 'Ú', type: 'button', onclick: "insertAccent('Ú')" %>
       <%= button_tag 'Ñ', type: 'button', onclick: "insertAccent('Ñ')" %>
-      <!-- Add more buttons for other accented characters as needed -->
     </div>
     <div id="accentButtons2">
       <%= button_tag 'á', type: 'button', onclick: "insertAccent('á')" %>
@@ -68,7 +65,6 @@
       <%= button_tag 'ó', type: 'button', onclick: "insertAccent('ó')" %>
       <%= button_tag 'ú', type: 'button', onclick: "insertAccent('ú')" %>
       <%= button_tag 'ñ', type: 'button', onclick: "insertAccent('ñ')" %>
-      <!-- Add more buttons for other accented characters as needed -->
     </div>
 
     <div>
