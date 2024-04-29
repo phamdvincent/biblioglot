@@ -4,23 +4,10 @@
 <div id="books" >
 
   <% @books.each do |book| %>
-    <%#= render book %>
-    <!---->
-    <%# if !current_user.books.include?(book) %>
-    <!--      <p>-->
-    <%#= link_to "Start this book!", book %>
-    <!--      </p>-->
-    <%# else %>
-    <!--      <p>-->
-    <%#= link_to "Continue this book!", book %>
-    <!--      </p>-->
-    <%# end %>
-    <!--  <hr>-->
     <div class="card center card-spacing" style="width: 20rem; ">
       <div class="card-body" >
         <h5 class="card-title" style="font-size: 30px;"><%= book.title %></h5>
         <h6 class="card-subtitle mb-2 text-muted" ><em>by <%= book.author %>, <%= book.publication_year %></em></h6>
-        <!--<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>-->
         <% if !current_user.books.include?(book) %>
           <p>
             <%= link_to "Start this book!", book %>
@@ -33,6 +20,12 @@
       </div>
     </div>
   <% end %>
+  <div class="book-button">
+    <a href="/" class="back">Back to homepage</a>
+  </div>
+
 </div>
+
+
 
 <%= link_to "New book", new_book_path %>
