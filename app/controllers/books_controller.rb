@@ -1,20 +1,6 @@
 require_relative "../services/nlp/nlp_service"
 include Nlp
 
-require_relative "../services/translation/translation_service"
-include Translation
-
-require_relative "../services/dictionary/dictionary_service"
-include Dictionary
-
-require_relative "../services/audio/audio_service"
-include Audio
-
-require_relative "../services/storage/storage_service"
-include Storage
-
-require "securerandom"
-
 class BooksController < ApplicationController
   before_action :set_book, only: %i[ show edit update destroy ]
 
