@@ -30,7 +30,10 @@ Below are the directions for developers to get set up and start working with Bib
 5) You will now be sent to the sign up page. Either create a new account or use the admin account.
    * Email: admin@example.com
    * Password: password
-6) You are now in the app! Play around as much as you like!
+6) Click on `Check out our books!` to go to the list of books
+7) Start the first book, "El árbol de la ciencia"
+8) In samples/texts/paragraph.txt, copy and paste the first item ("SERÍAN las diez...") into the adminstrator console, and wait a minute for the process to finish
+9) Play around with the newly processed sentences!
 
 ## Contribution
 To contribute to the project, a developer can play around with Biblioglot and report any bugs or enhancements they think will improve the quality of the project.
@@ -75,6 +78,3 @@ For security, this repository uses Github secrets to store the API keys. The sec
 `DEEPL_KEY` is the API key for Deepl's translation service. You can get this by creating an account on Deepl and purchasing the API Pro subscription. Then create an API key.
 
 `EC2_ADDRESS` is the address of the EC2 instance that houses the tokenization process. Contact me for the address as this is a heavy process that needs to be monitored.
-
-
-
