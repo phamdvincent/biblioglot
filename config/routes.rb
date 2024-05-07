@@ -13,5 +13,5 @@ Rails.application.routes.draw do
 
   devise_for :users
 
-
+``#teeny tiny nitpick: Remove extra blank line
 end

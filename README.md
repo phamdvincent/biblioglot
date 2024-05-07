@@ -78,3 +78,25 @@ For security, this repository uses Github secrets to store the API keys. The sec
 `DEEPL_KEY` is the API key for Deepl's translation service. You can get this by creating an account on Deepl and purchasing the API Pro subscription. Then create an API key.
 
 `EC2_ADDRESS` is the address of the EC2 instance that houses the tokenization process. Contact me for the address as this is a heavy process that needs to be monitored.
+
+<hr>
+
+# Code Review
+
+## Documentation
+- Good, detailed readme. Consider making the about app section more concise
+
+## Version Control
+- Good branching; however, no issue tracking and no pull requests created.
+
+## Code Hygiene
+- Really clean code; great job!
+
+## Frontend
+- Consider adding additional bootstrap styling
+- landing page utilized <br> for spacing when you could have used container margin & padding properties to adjust alignment
+- Work on mobile responsivity
+
+## Backend
+- Add pundit or other authorization frameworks
+- Great use of services! Very complex app
